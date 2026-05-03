@@ -1,0 +1,18 @@
+{
+  "name": "SearchStax Deployment Structure",
+  "description": "Structural documentation for a SearchStax managed Solr deployment",
+  "properties": {
+    "uid": { "type": "string", "description": "Unique deployment identifier" },
+    "name": { "type": "string", "description": "Human-readable deployment name" },
+    "status": { "type": "string", "description": "Deployment status: provisioning, running, stopped, error" },
+    "application": { "type": "string", "description": "Application type (Solr)" },
+    "application_version": { "type": "string", "description": "Solr version number" },
+    "plan": { "type": "string", "description": "Deployment plan identifier" },
+    "plan_type": { "type": "string", "description": "Plan category: DedicatedDeployment or ServerlessDeployment" },
+    "cloud_provider_id": { "type": "string", "description": "Cloud provider: aws, azure, or gcp" },
+    "region_id": { "type": "string", "description": "Cloud region identifier" },
+    "termination_lock": { "type": "boolean", "description": "Protection from accidental deletion" },
+    "solr_url": { "type": "string", "description": "Solr admin URL" },
+    "created": { "type": "string", "description": "Creation timestamp (ISO 8601)" }
+  }
+}

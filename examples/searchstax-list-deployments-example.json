@@ -1,0 +1,47 @@
+{
+  "request": {
+    "method": "GET",
+    "url": "https://app.searchstax.com/api/rest/v2/account/myaccount/deployment/?page=1&page_size=10",
+    "headers": {
+      "Authorization": "Token abc123yourtoken"
+    }
+  },
+  "response": {
+    "status": 200,
+    "body": {
+      "count": 2,
+      "next": null,
+      "previous": null,
+      "results": [
+        {
+          "uid": "ssx-prod-001",
+          "name": "production-solr",
+          "status": "running",
+          "application": "Solr",
+          "application_version": "9.4.1",
+          "plan": "NDN2-AWS-M",
+          "plan_type": "DedicatedDeployment",
+          "cloud_provider_id": "aws",
+          "region_id": "us-east-1",
+          "termination_lock": true,
+          "solr_url": "https://ssx-prod-001.searchstax.com/solr",
+          "created": "2026-01-15T10:00:00Z"
+        },
+        {
+          "uid": "ssx-stage-002",
+          "name": "staging-solr",
+          "status": "running",
+          "application": "Solr",
+          "application_version": "9.4.1",
+          "plan": "NDN2-AWS-S",
+          "plan_type": "DedicatedDeployment",
+          "cloud_provider_id": "aws",
+          "region_id": "us-east-1",
+          "termination_lock": false,
+          "solr_url": "https://ssx-stage-002.searchstax.com/solr",
+          "created": "2026-02-01T09:30:00Z"
+        }
+      ]
+    }
+  }
+}

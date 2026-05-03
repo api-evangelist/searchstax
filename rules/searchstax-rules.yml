@@ -1,0 +1,67 @@
+extends: spectral:oas
+rules:
+  searchstax-operation-ids-camel-case:
+    description: Operation IDs must use camelCase
+    severity: warn
+    given: "$.paths[*][*].operationId"
+    then:
+      function: pattern
+      functionOptions:
+        match: "^[a-z][a-zA-Z0-9]*$"
+
+  searchstax-tags-required:
+    description: All operations must have at least one tag
+    severity: error
+    given: "$.paths[*][*]"
+    then:
+      field: tags
+      function: truthy
+
+  searchstax-summaries-title-case:
+    description: Operation summaries must use Title Case
+    severity: warn
+    given: "$.paths[*][*].summary"
+    then:
+      function: pattern
+      functionOptions:
+        match: "^[A-Z][a-zA-Z0-9]*(\\s[A-Z][a-zA-Z0-9]*)*$"
+
+  searchstax-account-path-parameter:
+    description: Deployment management paths must include account_name path parameter
+    severity: warn
+    given: "$.paths['/api/rest/v2/account/{account_name}/*']"
+    then:
+      function: truthy
+
+  searchstax-delete-responses:
+    description: DELETE operations should return 204 No Content
+    severity: warn
+    given: "$.paths[*][delete].responses"
+    then:
+      field: "204"
+      function: truthy
+
+  searchstax-post-response-201:
+    description: POST create operations should return 201 Created
+    severity: info
+    given: "$.paths[*][post].responses"
+    then:
+      field: "201"
+      function: truthy
+
+  searchstax-token-auth:
+    description: Operations should document authentication requirements
+    severity: error
+    given: "$.paths[*][*]"
+    then:
+      field: security
+      function: truthy
+
+  searchstax-path-parameters-kebab:
+    description: Path parameters should use snake_case
+    severity: info
+    given: "$.paths[*][*].parameters[?(@.in=='path')].name"
+    then:
+      function: pattern
+      functionOptions:
+        match: "^[a-z][a-z0-9_]*$"

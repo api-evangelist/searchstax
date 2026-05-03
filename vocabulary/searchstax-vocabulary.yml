@@ -1,0 +1,78 @@
+name: SearchStax Vocabulary
+description: >-
+  Vocabulary and taxonomy for SearchStax managed Solr search infrastructure covering
+  deployment management, search configuration, backup operations, and cloud infrastructure concepts.
+created: '2026-05-02'
+modified: '2026-05-02'
+terms:
+  - term: Deployment
+    definition: >-
+      A managed Solr cluster instance provisioned by SearchStax on a cloud provider
+      (AWS, Azure, or GCP) with a defined plan, region, and configuration.
+    tags: [Core Entity, Infrastructure]
+
+  - term: Solr
+    definition: >-
+      Apache Solr, the open-source enterprise search platform that SearchStax manages
+      and hosts, providing full-text search, faceted search, and scalable indexing.
+    tags: [Technology, Search]
+
+  - term: ZooKeeper
+    definition: >-
+      Apache ZooKeeper, the distributed coordination service used by Solr Cloud for
+      managing cluster state, configuration, and leader election.
+    tags: [Technology, Infrastructure]
+
+  - term: Provisioning API
+    definition: >-
+      The REST API for creating and managing SearchStax accounts, deployments, nodes,
+      backups, and configuration. Requires Token or API Key authentication.
+    tags: [API, Infrastructure]
+
+  - term: Rolling Restart
+    definition: >-
+      A deployment operation that sequentially restarts Solr and/or ZooKeeper nodes
+      one at a time to apply configuration changes without causing downtime.
+    tags: [Operations, Availability]
+
+  - term: Termination Lock
+    definition: >-
+      A deployment protection flag that prevents accidental deletion. Must be disabled
+      before a locked deployment can be removed via the API.
+    tags: [Safety, Infrastructure]
+
+  - term: Collection
+    definition: >-
+      A Solr logical index containing documents organized by schema. Collections in
+      Solr Cloud are distributed across nodes with configurable replication.
+    tags: [Solr, Data]
+
+  - term: Plan
+    definition: >-
+      A SearchStax infrastructure tier defining the CPU, memory, storage, and node
+      count for a deployment. Available plans vary by cloud provider and region.
+    tags: [Pricing, Infrastructure]
+
+  - term: Site Search
+    definition: >-
+      The SearchStax Studio product providing a pre-built search experience for websites
+      with an API for querying indexed content and tracking user interactions.
+    tags: [Product, Search]
+
+  - term: Token Authentication
+    definition: >-
+      The primary authentication method for the SearchStax Provisioning API. Tokens
+      are obtained by POSTing credentials to /obtain-auth-token/ and expire after 24 hours.
+    tags: [Authentication, Security]
+
+  - term: API Key Authentication
+    definition: >-
+      A non-expiring authentication method for a subset of SearchStax operations including
+      Solr Basic Auth user management and ZooKeeper configuration.
+    tags: [Authentication, Security]
+
+  - term: Backup
+    definition: >-
+      A point-in-time snapshot of a Solr deployment's collections and configuration.
+      SearchStax supports scheduled and on-demand backups via the Provisioning API.
+    tags: [Data Protection, Operations]

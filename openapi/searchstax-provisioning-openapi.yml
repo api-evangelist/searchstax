@@ -1,0 +1,617 @@
+openapi: 3.0.3
+info:
+  title: SearchStax Provisioning API
+  description: >-
+    The SearchStax Provisioning API is a REST interface for creating and managing
+    Solr deployments in the SearchStax Managed Search cloud. It supports deployment
+    lifecycle management including creation, deletion, restart, backup and restore,
+    node management, authentication configuration, webhook management, and usage reporting.
+  version: 2.0.0
+  contact:
+    url: https://www.searchstax.com/docs/searchstax-cloud-apis-overview/
+servers:
+  - url: https://app.searchstax.com/api/rest/v2
+    description: SearchStax Provisioning API v2
+security:
+  - tokenAuth: []
+paths:
+  /obtain-auth-token/:
+    post:
+      operationId: obtainAuthToken
+      summary: Obtain Auth Token
+      description: >-
+        Exchange username and password credentials for a time-limited authentication
+        token. Tokens expire after 24 hours and must be included in subsequent API
+        requests in the Authorization header.
+      tags:
+        - Authentication
+      security: []
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              required: [username, password]
+              properties:
+                username:
+                  type: string
+                  description: SearchStax account username
+                password:
+                  type: string
+                  description: SearchStax account password
+      responses:
+        '200':
+          description: Authentication token returned
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  token:
+                    type: string
+                    description: Authentication token valid for 24 hours
+        '400':
+          description: Invalid credentials
+  /account/{account_name}/deployment/:
+    get:
+      operationId: listDeployments
+      summary: List Deployments
+      description: Retrieve all Solr deployments for the specified account with pagination.
+      tags:
+        - Deployments
+      parameters:
+        - $ref: '#/components/parameters/accountName'
+        - name: page
+          in: query
+          schema:
+            type: integer
+            default: 1
+        - name: page_size
+          in: query
+          schema:
+            type: integer
+            default: 25
+      responses:
+        '200':
+          description: List of deployments
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  count:
+                    type: integer
+                  next:
+                    type: string
+                    nullable: true
+                  previous:
+                    type: string
+                    nullable: true
+                  results:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Deployment'
+        '401':
+          description: Unauthorized
+    post:
+      operationId: createDeployment
+      summary: Create Deployment
+      description: >-
+        Create a new Solr deployment. Provisioning may take up to an hour to complete.
+        Only Account Owner, Admin, or Technical Contact roles may invoke this endpoint.
+      tags:
+        - Deployments
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateDeploymentRequest'
+      responses:
+        '201':
+          description: Deployment creation initiated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Deployment'
+        '400':
+          description: Invalid request parameters
+        '401':
+          description: Unauthorized
+  /account/{account_name}/deployment/{uid}/:
+    get:
+      operationId: getDeployment
+      summary: Get Deployment
+      description: Retrieve comprehensive details about a specific Solr deployment.
+      tags:
+        - Deployments
+      parameters:
+        - $ref: '#/components/parameters/accountName'
+        - $ref: '#/components/parameters/deploymentUid'
+      responses:
+        '200':
+          description: Deployment details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Deployment'
+        '404':
+          description: Deployment not found
+    delete:
+      operationId: deleteDeployment
+      summary: Delete Deployment
+      description: >-
+        Delete a deployment. Subject to termination lock restrictions. Optionally
+        retain scheduled backups after deletion.
+      tags:
+        - Deployments
+      parameters:
+        - $ref: '#/components/parameters/accountName'
+        - $ref: '#/components/parameters/deploymentUid'
+        - name: retain_backups
+          in: query
+          schema:
+            type: boolean
+            default: false
+      responses:
+        '204':
+          description: Deployment deleted
+        '403':
+          description: Termination lock active
+        '404':
+          description: Deployment not found
+  /account/{account_name}/deployment/{uid}/deployment-health/:
+    get:
+      operationId: getDeploymentHealth
+      summary: Get Deployment Health
+      description: Returns the health status of the deployment as OK, Warn, or Error.
+      tags:
+        - Deployments
+      parameters:
+        - $ref: '#/components/parameters/accountName'
+        - $ref: '#/components/parameters/deploymentUid'
+      responses:
+        '200':
+          description: Deployment health status
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    enum: [OK, Warn, Error]
+  /account/{account_name}/deployment/{uid}/collection-health/:
+    get:
+      operationId: getCollectionHealth
+      summary: Get Collection Health
+      description: Checks whether all Solr collections are healthy or degraded.
+      tags:
+        - Deployments
+      parameters:
+        - $ref: '#/components/parameters/accountName'
+        - $ref: '#/components/parameters/deploymentUid'
+      responses:
+        '200':
+          description: Collection health status
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  healthy:
+                    type: boolean
+                  collections:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        name:
+                          type: string
+                        status:
+                          type: string
+  /account/{account_name}/deployment/{uid}/rolling-restart/:
+    put:
+      operationId: rollingRestart
+      summary: Rolling Restart
+      description: >-
+        Sequentially restart cluster nodes without downtime. Can restart Solr nodes,
+        ZooKeeper nodes, or both.
+      tags:
+        - Deployments
+      parameters:
+        - $ref: '#/components/parameters/accountName'
+        - $ref: '#/components/parameters/deploymentUid'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [solr, zookeeper]
+              properties:
+                solr:
+                  type: boolean
+                  description: Restart Solr nodes
+                zookeeper:
+                  type: boolean
+                  description: Restart ZooKeeper nodes
+      responses:
+        '200':
+          description: Restart initiated
+        '400':
+          description: Invalid request
+  /account/{account_name}/deployment/{uid}/backup/:
+    get:
+      operationId: listBackups
+      summary: List Backups
+      description: List all existing backups for a deployment.
+      tags:
+        - Backup
+      parameters:
+        - $ref: '#/components/parameters/accountName'
+        - $ref: '#/components/parameters/deploymentUid'
+      responses:
+        '200':
+          description: List of backups
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Backup'
+    post:
+      operationId: createBackup
+      summary: Create Backup
+      description: Create a new backup of the deployment.
+      tags:
+        - Backup
+      parameters:
+        - $ref: '#/components/parameters/accountName'
+        - $ref: '#/components/parameters/deploymentUid'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: Optional backup name
+      responses:
+        '201':
+          description: Backup created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Backup'
+  /account/{account_name}/deployment/{uid}/server/:
+    get:
+      operationId: listNodes
+      summary: List Nodes
+      description: Returns all nodes comprising the deployment with addresses and status details.
+      tags:
+        - Nodes
+      parameters:
+        - $ref: '#/components/parameters/accountName'
+        - $ref: '#/components/parameters/deploymentUid'
+      responses:
+        '200':
+          description: List of deployment nodes
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Node'
+  /account/{account_name}/deployment/{uid}/server/{node}/start-solr/:
+    post:
+      operationId: startSolrNode
+      summary: Start Solr Node
+      description: Activate an individual Solr node within the deployment.
+      tags:
+        - Nodes
+      parameters:
+        - $ref: '#/components/parameters/accountName'
+        - $ref: '#/components/parameters/deploymentUid'
+        - $ref: '#/components/parameters/node'
+      responses:
+        '200':
+          description: Node start initiated
+  /account/{account_name}/deployment/{uid}/server/{node}/stop-solr/:
+    post:
+      operationId: stopSolrNode
+      summary: Stop Solr Node
+      description: Deactivate an individual Solr node within the deployment.
+      tags:
+        - Nodes
+      parameters:
+        - $ref: '#/components/parameters/accountName'
+        - $ref: '#/components/parameters/deploymentUid'
+        - $ref: '#/components/parameters/node'
+      responses:
+        '200':
+          description: Node stop initiated
+  /account/{account_name}/deployment/{uid}/server/{node}/host-status/:
+    get:
+      operationId: getNodeStatus
+      summary: Get Node Status
+      description: Retrieve operational status of a specific deployment node.
+      tags:
+        - Nodes
+      parameters:
+        - $ref: '#/components/parameters/accountName'
+        - $ref: '#/components/parameters/deploymentUid'
+        - $ref: '#/components/parameters/node'
+      responses:
+        '200':
+          description: Node status details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NodeStatus'
+  /account/{account_name}/plan/:
+    get:
+      operationId: listPlans
+      summary: List Plans
+      description: Enumerate accessible deployment plans and corresponding regional availability.
+      tags:
+        - Plans
+      parameters:
+        - $ref: '#/components/parameters/accountName'
+        - name: application
+          in: query
+          schema:
+            type: string
+            default: Solr
+        - name: plan_type
+          in: query
+          schema:
+            type: string
+            default: DedicatedPlan
+      responses:
+        '200':
+          description: List of available plans
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Plan'
+  /account/{account_name}/usage/{year}/{month}/:
+    get:
+      operationId: getUsage
+      summary: Get Usage
+      description: List billable events for dedicated deployments during a specified period.
+      tags:
+        - Usage
+      parameters:
+        - $ref: '#/components/parameters/accountName'
+        - name: year
+          in: path
+          required: true
+          schema:
+            type: integer
+        - name: month
+          in: path
+          required: true
+          schema:
+            type: integer
+            minimum: 1
+            maximum: 12
+      responses:
+        '200':
+          description: Usage data for the specified period
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UsageReport'
+  /account/{account_name}/apikey/:
+    post:
+      operationId: createApiKey
+      summary: Create API Key
+      description: Create a new API key for the account.
+      tags:
+        - Authentication
+      parameters:
+        - $ref: '#/components/parameters/accountName'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: Descriptive name for the API key
+      responses:
+        '201':
+          description: API key created
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  key:
+                    type: string
+                  name:
+                    type: string
+                  created:
+                    type: string
+                    format: date-time
+components:
+  securitySchemes:
+    tokenAuth:
+      type: http
+      scheme: bearer
+      description: Token obtained from /obtain-auth-token/ endpoint
+  parameters:
+    accountName:
+      name: account_name
+      in: path
+      required: true
+      description: SearchStax account name
+      schema:
+        type: string
+    deploymentUid:
+      name: uid
+      in: path
+      required: true
+      description: Deployment unique identifier
+      schema:
+        type: string
+    node:
+      name: node
+      in: path
+      required: true
+      description: Node identifier
+      schema:
+        type: string
+  schemas:
+    CreateDeploymentRequest:
+      type: object
+      required: [name, application, application_version, termination_lock, plan_type, plan, region_id, cloud_provider_id]
+      properties:
+        name:
+          type: string
+          description: Deployment name
+        application:
+          type: string
+          enum: [Solr]
+        application_version:
+          type: string
+          description: Solr version (e.g., "9.4.1")
+        termination_lock:
+          type: boolean
+          description: Shield deployment from accidental deletion
+        plan_type:
+          type: string
+          enum: [DedicatedDeployment]
+        plan:
+          type: string
+          description: Plan identifier (e.g., "NDN2-AWS-S")
+        region_id:
+          type: string
+          description: Cloud region identifier (e.g., "us-east-1")
+        cloud_provider_id:
+          type: string
+          enum: [aws, azure, gcp]
+        num_additional_app_nodes:
+          type: integer
+          description: Additional Solr application nodes
+        private_vpc:
+          type: integer
+          description: Private VPC ID for network isolation
+    Deployment:
+      type: object
+      properties:
+        uid:
+          type: string
+        name:
+          type: string
+        status:
+          type: string
+          enum: [provisioning, running, stopped, error]
+        application:
+          type: string
+        application_version:
+          type: string
+        plan:
+          type: string
+        cloud_provider_id:
+          type: string
+        region_id:
+          type: string
+        termination_lock:
+          type: boolean
+        solr_url:
+          type: string
+        created:
+          type: string
+          format: date-time
+    Backup:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        status:
+          type: string
+          enum: [in_progress, completed, failed]
+        created:
+          type: string
+          format: date-time
+        size_bytes:
+          type: integer
+    Node:
+      type: object
+      properties:
+        name:
+          type: string
+        role:
+          type: string
+          enum: [solr, zookeeper]
+        address:
+          type: string
+        status:
+          type: string
+          enum: [running, stopped, error]
+    NodeStatus:
+      type: object
+      properties:
+        name:
+          type: string
+        status:
+          type: string
+        uptime:
+          type: integer
+          description: Uptime in seconds
+        cpu_percent:
+          type: number
+        memory_percent:
+          type: number
+    Plan:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        application:
+          type: string
+        plan_type:
+          type: string
+        cpu:
+          type: integer
+        memory_gb:
+          type: integer
+        storage_gb:
+          type: integer
+        regions:
+          type: array
+          items:
+            type: string
+    UsageReport:
+      type: object
+      properties:
+        account:
+          type: string
+        year:
+          type: integer
+        month:
+          type: integer
+        deployments:
+          type: array
+          items:
+            type: object
+            properties:
+              uid:
+                type: string
+              name:
+                type: string
+              hours:
+                type: number
+              cost:
+                type: number

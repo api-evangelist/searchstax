@@ -1,0 +1,226 @@
+naftiko: "1.0.0-alpha1"
+
+info:
+  label: "SearchStax Search Infrastructure Management"
+  description: >-
+    Unified capability for managing SearchStax Solr search infrastructure including
+    deployment lifecycle, health monitoring, backup and restore operations, and usage
+    reporting. Designed for DevOps and platform engineers managing production Solr
+    clusters on AWS, Azure, or Google Cloud.
+  tags:
+    - Search Infrastructure
+    - Solr
+    - Deployments
+    - DevOps
+    - Cloud Management
+  created: "2026-05-02"
+  modified: "2026-05-02"
+
+binds:
+  - namespace: env
+    keys:
+      SEARCHSTAX_TOKEN: SEARCHSTAX_TOKEN
+      SEARCHSTAX_ACCOUNT: SEARCHSTAX_ACCOUNT
+
+capability:
+  consumes:
+    - import: searchstax-provisioning
+      location: ./shared/provisioning.yaml
+
+  exposes:
+    - type: rest
+      port: 8080
+      namespace: search-infrastructure-api
+      description: "Unified REST API for SearchStax Solr infrastructure management."
+      resources:
+        - path: /v1/deployments
+          name: deployments
+          description: "Solr deployment management"
+          operations:
+            - method: GET
+              name: list-deployments
+              description: "List all Solr deployments"
+              call: "searchstax-provisioning.list-deployments"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+            - method: POST
+              name: create-deployment
+              description: "Provision a new Solr deployment"
+              call: "searchstax-provisioning.create-deployment"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+
+        - path: /v1/deployments/{uid}
+          name: deployment-detail
+          description: "Specific deployment operations"
+          operations:
+            - method: GET
+              name: get-deployment
+              description: "Get deployment configuration and status"
+              call: "searchstax-provisioning.get-deployment"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+            - method: DELETE
+              name: delete-deployment
+              description: "Delete a deployment"
+              call: "searchstax-provisioning.delete-deployment"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+
+        - path: /v1/deployments/{uid}/health
+          name: deployment-health
+          description: "Deployment health monitoring"
+          operations:
+            - method: GET
+              name: get-deployment-health
+              description: "Check deployment health status"
+              call: "searchstax-provisioning.get-deployment-health"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+
+        - path: /v1/deployments/{uid}/backups
+          name: backups
+          description: "Backup and restore operations"
+          operations:
+            - method: GET
+              name: list-backups
+              description: "List deployment backups"
+              call: "searchstax-provisioning.list-backups"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+            - method: POST
+              name: create-backup
+              description: "Create deployment backup"
+              call: "searchstax-provisioning.create-backup"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+
+        - path: /v1/deployments/{uid}/nodes
+          name: nodes
+          description: "Deployment node management"
+          operations:
+            - method: GET
+              name: list-nodes
+              description: "List all nodes in a deployment"
+              call: "searchstax-provisioning.list-nodes"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+
+        - path: /v1/usage/{year}/{month}
+          name: usage
+          description: "Usage and billing reporting"
+          operations:
+            - method: GET
+              name: get-usage
+              description: "Get usage data for a billing period"
+              call: "searchstax-provisioning.get-usage"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+
+    - type: mcp
+      port: 9090
+      namespace: search-infrastructure-mcp
+      transport: http
+      description: "MCP server for AI-assisted SearchStax Solr infrastructure management."
+      tools:
+        - name: list-deployments
+          description: "List all Solr deployments in the SearchStax account with their status and configuration"
+          hints:
+            readOnly: true
+            openWorld: false
+          call: "searchstax-provisioning.list-deployments"
+          outputParameters:
+            - type: object
+              mapping: "$."
+
+        - name: create-deployment
+          description: "Provision a new managed Solr deployment on AWS, Azure, or Google Cloud"
+          hints:
+            readOnly: false
+            destructive: false
+            idempotent: false
+          call: "searchstax-provisioning.create-deployment"
+          outputParameters:
+            - type: object
+              mapping: "$."
+
+        - name: get-deployment
+          description: "Get full configuration and status details for a specific Solr deployment"
+          hints:
+            readOnly: true
+            openWorld: false
+          call: "searchstax-provisioning.get-deployment"
+          outputParameters:
+            - type: object
+              mapping: "$."
+
+        - name: delete-deployment
+          description: "Delete a Solr deployment and optionally retain its backups"
+          hints:
+            readOnly: false
+            destructive: true
+            idempotent: true
+          call: "searchstax-provisioning.delete-deployment"
+          outputParameters:
+            - type: object
+              mapping: "$."
+
+        - name: get-deployment-health
+          description: "Check the operational health status of a Solr deployment (OK, Warn, or Error)"
+          hints:
+            readOnly: true
+            openWorld: false
+          call: "searchstax-provisioning.get-deployment-health"
+          outputParameters:
+            - type: object
+              mapping: "$."
+
+        - name: list-backups
+          description: "List all available backups for a Solr deployment"
+          hints:
+            readOnly: true
+            openWorld: false
+          call: "searchstax-provisioning.list-backups"
+          outputParameters:
+            - type: object
+              mapping: "$."
+
+        - name: create-backup
+          description: "Create an on-demand backup of a Solr deployment"
+          hints:
+            readOnly: false
+            destructive: false
+            idempotent: false
+          call: "searchstax-provisioning.create-backup"
+          outputParameters:
+            - type: object
+              mapping: "$."
+
+        - name: list-nodes
+          description: "List all Solr and ZooKeeper nodes in a deployment with their addresses and status"
+          hints:
+            readOnly: true
+            openWorld: false
+          call: "searchstax-provisioning.list-nodes"
+          outputParameters:
+            - type: object
+              mapping: "$."
+
+        - name: get-usage
+          description: "Get billable usage data for dedicated Solr deployments in a specific month"
+          hints:
+            readOnly: true
+            openWorld: false
+          call: "searchstax-provisioning.get-usage"
+          outputParameters:
+            - type: object
+              mapping: "$."

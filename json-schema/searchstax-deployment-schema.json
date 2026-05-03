@@ -1,0 +1,67 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/searchstax/refs/heads/main/json-schema/searchstax-deployment-schema.json",
+  "title": "SearchStax Deployment",
+  "description": "A managed Solr deployment in the SearchStax cloud infrastructure.",
+  "type": "object",
+  "properties": {
+    "uid": {
+      "type": "string",
+      "description": "Unique deployment identifier"
+    },
+    "name": {
+      "type": "string",
+      "description": "Deployment name"
+    },
+    "status": {
+      "type": "string",
+      "description": "Current deployment status",
+      "enum": ["provisioning", "running", "stopped", "error"]
+    },
+    "application": {
+      "type": "string",
+      "description": "Search application type",
+      "enum": ["Solr"]
+    },
+    "application_version": {
+      "type": "string",
+      "description": "Solr version (e.g., 9.4.1)"
+    },
+    "plan": {
+      "type": "string",
+      "description": "Deployment plan identifier"
+    },
+    "plan_type": {
+      "type": "string",
+      "enum": ["DedicatedDeployment", "ServerlessDeployment"]
+    },
+    "cloud_provider_id": {
+      "type": "string",
+      "description": "Cloud provider",
+      "enum": ["aws", "azure", "gcp"]
+    },
+    "region_id": {
+      "type": "string",
+      "description": "Cloud region identifier"
+    },
+    "termination_lock": {
+      "type": "boolean",
+      "description": "Whether the deployment is protected from deletion"
+    },
+    "solr_url": {
+      "type": "string",
+      "format": "uri",
+      "description": "Solr admin URL"
+    },
+    "num_nodes": {
+      "type": "integer",
+      "description": "Total number of Solr nodes"
+    },
+    "created": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Deployment creation timestamp"
+    }
+  },
+  "required": ["uid", "name", "status", "application", "plan"]
+}
