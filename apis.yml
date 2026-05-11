@@ -65,6 +65,9 @@ description: >-
   API for managing deployments, backup and restore, authentication, webhooks, and infrastructure
   configuration, along with a Site Search API for delivering search results from SearchStax
   Studio applications.
+integrations:
+  - name: Become a Partner
+  - name: Register a Lead
 maintainers:
   - FN: Kin Lane
     email: kin@apievangelist.com
@@ -105,3 +108,5 @@ common:
     type: NaftikoCapability
   - url: vocabulary/searchstax-vocabulary.yml
     type: Vocabulary
+  - type: Integrations
+    url: https://www.searchstax.com/partners/
