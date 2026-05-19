@@ -1,0 +1,166 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: SearchStax Provisioning API — Nodes
+  description: 'SearchStax Provisioning API — Nodes. 4 operations. Lead operation: List Nodes. Self-contained Naftiko capability
+    covering one Searchstax business surface.'
+  tags:
+  - Searchstax
+  - Nodes
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    SEARCHSTAX_API_KEY: SEARCHSTAX_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: provisioning-nodes
+    baseUri: https://app.searchstax.com/api/rest/v2
+    description: SearchStax Provisioning API — Nodes business capability. Self-contained, no shared references.
+    resources:
+    - name: account-account_name-deployment-uid-server
+      path: /account/{account_name}/deployment/{uid}/server/
+      operations:
+      - name: listnodes
+        method: GET
+        description: List Nodes
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: account-account_name-deployment-uid-server-node-host-status
+      path: /account/{account_name}/deployment/{uid}/server/{node}/host-status/
+      operations:
+      - name: getnodestatus
+        method: GET
+        description: Get Node Status
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: account-account_name-deployment-uid-server-node-start-solr
+      path: /account/{account_name}/deployment/{uid}/server/{node}/start-solr/
+      operations:
+      - name: startsolrnode
+        method: POST
+        description: Start Solr Node
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: account-account_name-deployment-uid-server-node-stop-solr
+      path: /account/{account_name}/deployment/{uid}/server/{node}/stop-solr/
+      operations:
+      - name: stopsolrnode
+        method: POST
+        description: Stop Solr Node
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    authentication:
+      type: bearer
+      token: '{{env.SEARCHSTAX_API_KEY}}'
+  exposes:
+  - type: rest
+    namespace: provisioning-nodes-rest
+    port: 8080
+    description: REST adapter for SearchStax Provisioning API — Nodes. One Spectral-compliant resource per consumed operation,
+      prefixed with /v1.
+    resources:
+    - path: /v1/account/{account-name}/deployment/{uid}/server
+      name: account-account-name-deployment-uid-server
+      description: REST surface for account-account_name-deployment-uid-server.
+      operations:
+      - method: GET
+        name: listnodes
+        description: List Nodes
+        call: provisioning-nodes.listnodes
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/account/{account-name}/deployment/{uid}/server/{node}/host-status
+      name: account-account-name-deployment-uid-server-node-host-status
+      description: REST surface for account-account_name-deployment-uid-server-node-host-status.
+      operations:
+      - method: GET
+        name: getnodestatus
+        description: Get Node Status
+        call: provisioning-nodes.getnodestatus
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/account/{account-name}/deployment/{uid}/server/{node}/start-solr
+      name: account-account-name-deployment-uid-server-node-start-solr
+      description: REST surface for account-account_name-deployment-uid-server-node-start-solr.
+      operations:
+      - method: POST
+        name: startsolrnode
+        description: Start Solr Node
+        call: provisioning-nodes.startsolrnode
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/account/{account-name}/deployment/{uid}/server/{node}/stop-solr
+      name: account-account-name-deployment-uid-server-node-stop-solr
+      description: REST surface for account-account_name-deployment-uid-server-node-stop-solr.
+      operations:
+      - method: POST
+        name: stopsolrnode
+        description: Stop Solr Node
+        call: provisioning-nodes.stopsolrnode
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: provisioning-nodes-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for SearchStax Provisioning API — Nodes. One tool per consumed operation, routed inline through
+      this capability's consumes block.
+    tools:
+    - name: list-nodes
+      description: List Nodes
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: provisioning-nodes.listnodes
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-node-status
+      description: Get Node Status
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: provisioning-nodes.getnodestatus
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: start-solr-node
+      description: Start Solr Node
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: provisioning-nodes.startsolrnode
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: stop-solr-node
+      description: Stop Solr Node
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: provisioning-nodes.stopsolrnode
+      outputParameters:
+      - type: object
+        mapping: $.

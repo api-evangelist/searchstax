@@ -1,0 +1,83 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: SearchStax Provisioning API — Plans
+  description: 'SearchStax Provisioning API — Plans. 1 operations. Lead operation: List Plans. Self-contained Naftiko capability
+    covering one Searchstax business surface.'
+  tags:
+  - Searchstax
+  - Plans
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    SEARCHSTAX_API_KEY: SEARCHSTAX_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: provisioning-plans
+    baseUri: https://app.searchstax.com/api/rest/v2
+    description: SearchStax Provisioning API — Plans business capability. Self-contained, no shared references.
+    resources:
+    - name: account-account_name-plan
+      path: /account/{account_name}/plan/
+      operations:
+      - name: listplans
+        method: GET
+        description: List Plans
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: application
+          in: query
+          type: string
+        - name: plan_type
+          in: query
+          type: string
+    authentication:
+      type: bearer
+      token: '{{env.SEARCHSTAX_API_KEY}}'
+  exposes:
+  - type: rest
+    namespace: provisioning-plans-rest
+    port: 8080
+    description: REST adapter for SearchStax Provisioning API — Plans. One Spectral-compliant resource per consumed operation,
+      prefixed with /v1.
+    resources:
+    - path: /v1/account/{account-name}/plan
+      name: account-account-name-plan
+      description: REST surface for account-account_name-plan.
+      operations:
+      - method: GET
+        name: listplans
+        description: List Plans
+        call: provisioning-plans.listplans
+        with:
+          application: rest.application
+          plan_type: rest.plan_type
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: provisioning-plans-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for SearchStax Provisioning API — Plans. One tool per consumed operation, routed inline through
+      this capability's consumes block.
+    tools:
+    - name: list-plans
+      description: List Plans
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: provisioning-plans.listplans
+      with:
+        application: tools.application
+        plan_type: tools.plan_type
+      outputParameters:
+      - type: object
+        mapping: $.

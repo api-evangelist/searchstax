@@ -1,0 +1,289 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: SearchStax Provisioning API — Deployments
+  description: 'SearchStax Provisioning API — Deployments. 7 operations. Lead operation: List Deployments. Self-contained
+    Naftiko capability covering one Searchstax business surface.'
+  tags:
+  - Searchstax
+  - Deployments
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    SEARCHSTAX_API_KEY: SEARCHSTAX_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: provisioning-deployments
+    baseUri: https://app.searchstax.com/api/rest/v2
+    description: SearchStax Provisioning API — Deployments business capability. Self-contained, no shared references.
+    resources:
+    - name: account-account_name-deployment
+      path: /account/{account_name}/deployment/
+      operations:
+      - name: listdeployments
+        method: GET
+        description: List Deployments
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: page
+          in: query
+          type: integer
+        - name: page_size
+          in: query
+          type: integer
+      - name: createdeployment
+        method: POST
+        description: Create Deployment
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: account-account_name-deployment-uid
+      path: /account/{account_name}/deployment/{uid}/
+      operations:
+      - name: getdeployment
+        method: GET
+        description: Get Deployment
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+      - name: deletedeployment
+        method: DELETE
+        description: Delete Deployment
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: retain_backups
+          in: query
+          type: boolean
+    - name: account-account_name-deployment-uid-collection-health
+      path: /account/{account_name}/deployment/{uid}/collection-health/
+      operations:
+      - name: getcollectionhealth
+        method: GET
+        description: Get Collection Health
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: account-account_name-deployment-uid-deployment-health
+      path: /account/{account_name}/deployment/{uid}/deployment-health/
+      operations:
+      - name: getdeploymenthealth
+        method: GET
+        description: Get Deployment Health
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: account-account_name-deployment-uid-rolling-restart
+      path: /account/{account_name}/deployment/{uid}/rolling-restart/
+      operations:
+      - name: rollingrestart
+        method: PUT
+        description: Rolling Restart
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    authentication:
+      type: bearer
+      token: '{{env.SEARCHSTAX_API_KEY}}'
+  exposes:
+  - type: rest
+    namespace: provisioning-deployments-rest
+    port: 8080
+    description: REST adapter for SearchStax Provisioning API — Deployments. One Spectral-compliant resource per consumed
+      operation, prefixed with /v1.
+    resources:
+    - path: /v1/account/{account-name}/deployment
+      name: account-account-name-deployment
+      description: REST surface for account-account_name-deployment.
+      operations:
+      - method: GET
+        name: listdeployments
+        description: List Deployments
+        call: provisioning-deployments.listdeployments
+        with:
+          page: rest.page
+          page_size: rest.page_size
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: POST
+        name: createdeployment
+        description: Create Deployment
+        call: provisioning-deployments.createdeployment
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/account/{account-name}/deployment/{uid}
+      name: account-account-name-deployment-uid
+      description: REST surface for account-account_name-deployment-uid.
+      operations:
+      - method: GET
+        name: getdeployment
+        description: Get Deployment
+        call: provisioning-deployments.getdeployment
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: DELETE
+        name: deletedeployment
+        description: Delete Deployment
+        call: provisioning-deployments.deletedeployment
+        with:
+          retain_backups: rest.retain_backups
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/account/{account-name}/deployment/{uid}/collection-health
+      name: account-account-name-deployment-uid-collection-health
+      description: REST surface for account-account_name-deployment-uid-collection-health.
+      operations:
+      - method: GET
+        name: getcollectionhealth
+        description: Get Collection Health
+        call: provisioning-deployments.getcollectionhealth
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/account/{account-name}/deployment/{uid}/deployment-health
+      name: account-account-name-deployment-uid-deployment-health
+      description: REST surface for account-account_name-deployment-uid-deployment-health.
+      operations:
+      - method: GET
+        name: getdeploymenthealth
+        description: Get Deployment Health
+        call: provisioning-deployments.getdeploymenthealth
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/account/{account-name}/deployment/{uid}/rolling-restart
+      name: account-account-name-deployment-uid-rolling-restart
+      description: REST surface for account-account_name-deployment-uid-rolling-restart.
+      operations:
+      - method: PUT
+        name: rollingrestart
+        description: Rolling Restart
+        call: provisioning-deployments.rollingrestart
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: provisioning-deployments-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for SearchStax Provisioning API — Deployments. One tool per consumed operation, routed inline
+      through this capability's consumes block.
+    tools:
+    - name: list-deployments
+      description: List Deployments
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: provisioning-deployments.listdeployments
+      with:
+        page: tools.page
+        page_size: tools.page_size
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: create-deployment
+      description: Create Deployment
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: provisioning-deployments.createdeployment
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-deployment
+      description: Get Deployment
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: provisioning-deployments.getdeployment
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: delete-deployment
+      description: Delete Deployment
+      hints:
+        readOnly: false
+        destructive: true
+        idempotent: true
+      call: provisioning-deployments.deletedeployment
+      with:
+        retain_backups: tools.retain_backups
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-collection-health
+      description: Get Collection Health
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: provisioning-deployments.getcollectionhealth
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-deployment-health
+      description: Get Deployment Health
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: provisioning-deployments.getdeploymenthealth
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: rolling-restart
+      description: Rolling Restart
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: true
+      call: provisioning-deployments.rollingrestart
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
