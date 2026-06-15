@@ -1,0 +1,519 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "SearchStax Provisioning API",
+    "version": "2.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Authentication",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Obtain Auth Token",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://app.searchstax.com/api/rest/v2/obtain-auth-token/",
+            "body": {
+              "type": "form-urlencoded",
+              "data": [
+                {
+                  "name": "username",
+                  "value": ""
+                },
+                {
+                  "name": "password",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "docs": "Exchange username and password credentials for a time-limited authentication token. Tokens expire after 24 hours and must be included in subsequent API requests in the Authorization header."
+        },
+        {
+          "info": {
+            "name": "Create API Key",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://app.searchstax.com/api/rest/v2/account/:account_name/apikey/",
+            "params": [
+              {
+                "name": "account_name",
+                "value": "",
+                "type": "path",
+                "description": "SearchStax account name"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a new API key for the account."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Deployments",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List Deployments",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://app.searchstax.com/api/rest/v2/account/:account_name/deployment/",
+            "params": [
+              {
+                "name": "account_name",
+                "value": "",
+                "type": "path",
+                "description": "SearchStax account name"
+              },
+              {
+                "name": "page",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "page_size",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Retrieve all Solr deployments for the specified account with pagination."
+        },
+        {
+          "info": {
+            "name": "Create Deployment",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://app.searchstax.com/api/rest/v2/account/:account_name/deployment/",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a new Solr deployment. Provisioning may take up to an hour to complete. Only Account Owner, Admin, or Technical Contact roles may invoke this endpoint."
+        },
+        {
+          "info": {
+            "name": "Get Deployment",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://app.searchstax.com/api/rest/v2/account/:account_name/deployment/:uid/",
+            "params": [
+              {
+                "name": "account_name",
+                "value": "",
+                "type": "path",
+                "description": "SearchStax account name"
+              },
+              {
+                "name": "uid",
+                "value": "",
+                "type": "path",
+                "description": "Deployment unique identifier"
+              }
+            ]
+          },
+          "docs": "Retrieve comprehensive details about a specific Solr deployment."
+        },
+        {
+          "info": {
+            "name": "Delete Deployment",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://app.searchstax.com/api/rest/v2/account/:account_name/deployment/:uid/",
+            "params": [
+              {
+                "name": "account_name",
+                "value": "",
+                "type": "path",
+                "description": "SearchStax account name"
+              },
+              {
+                "name": "uid",
+                "value": "",
+                "type": "path",
+                "description": "Deployment unique identifier"
+              },
+              {
+                "name": "retain_backups",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Delete a deployment. Subject to termination lock restrictions. Optionally retain scheduled backups after deletion."
+        },
+        {
+          "info": {
+            "name": "Get Deployment Health",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://app.searchstax.com/api/rest/v2/account/:account_name/deployment/:uid/deployment-health/",
+            "params": [
+              {
+                "name": "account_name",
+                "value": "",
+                "type": "path",
+                "description": "SearchStax account name"
+              },
+              {
+                "name": "uid",
+                "value": "",
+                "type": "path",
+                "description": "Deployment unique identifier"
+              }
+            ]
+          },
+          "docs": "Returns the health status of the deployment as OK, Warn, or Error."
+        },
+        {
+          "info": {
+            "name": "Get Collection Health",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://app.searchstax.com/api/rest/v2/account/:account_name/deployment/:uid/collection-health/",
+            "params": [
+              {
+                "name": "account_name",
+                "value": "",
+                "type": "path",
+                "description": "SearchStax account name"
+              },
+              {
+                "name": "uid",
+                "value": "",
+                "type": "path",
+                "description": "Deployment unique identifier"
+              }
+            ]
+          },
+          "docs": "Checks whether all Solr collections are healthy or degraded."
+        },
+        {
+          "info": {
+            "name": "Rolling Restart",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://app.searchstax.com/api/rest/v2/account/:account_name/deployment/:uid/rolling-restart/",
+            "params": [
+              {
+                "name": "account_name",
+                "value": "",
+                "type": "path",
+                "description": "SearchStax account name"
+              },
+              {
+                "name": "uid",
+                "value": "",
+                "type": "path",
+                "description": "Deployment unique identifier"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Sequentially restart cluster nodes without downtime. Can restart Solr nodes, ZooKeeper nodes, or both."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Backup",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List Backups",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://app.searchstax.com/api/rest/v2/account/:account_name/deployment/:uid/backup/",
+            "params": [
+              {
+                "name": "account_name",
+                "value": "",
+                "type": "path",
+                "description": "SearchStax account name"
+              },
+              {
+                "name": "uid",
+                "value": "",
+                "type": "path",
+                "description": "Deployment unique identifier"
+              }
+            ]
+          },
+          "docs": "List all existing backups for a deployment."
+        },
+        {
+          "info": {
+            "name": "Create Backup",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://app.searchstax.com/api/rest/v2/account/:account_name/deployment/:uid/backup/",
+            "params": [
+              {
+                "name": "account_name",
+                "value": "",
+                "type": "path",
+                "description": "SearchStax account name"
+              },
+              {
+                "name": "uid",
+                "value": "",
+                "type": "path",
+                "description": "Deployment unique identifier"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a new backup of the deployment."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Nodes",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List Nodes",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://app.searchstax.com/api/rest/v2/account/:account_name/deployment/:uid/server/",
+            "params": [
+              {
+                "name": "account_name",
+                "value": "",
+                "type": "path",
+                "description": "SearchStax account name"
+              },
+              {
+                "name": "uid",
+                "value": "",
+                "type": "path",
+                "description": "Deployment unique identifier"
+              }
+            ]
+          },
+          "docs": "Returns all nodes comprising the deployment with addresses and status details."
+        },
+        {
+          "info": {
+            "name": "Start Solr Node",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://app.searchstax.com/api/rest/v2/account/:account_name/deployment/:uid/server/:node/start-solr/",
+            "params": [
+              {
+                "name": "account_name",
+                "value": "",
+                "type": "path",
+                "description": "SearchStax account name"
+              },
+              {
+                "name": "uid",
+                "value": "",
+                "type": "path",
+                "description": "Deployment unique identifier"
+              },
+              {
+                "name": "node",
+                "value": "",
+                "type": "path",
+                "description": "Node identifier"
+              }
+            ]
+          },
+          "docs": "Activate an individual Solr node within the deployment."
+        },
+        {
+          "info": {
+            "name": "Stop Solr Node",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://app.searchstax.com/api/rest/v2/account/:account_name/deployment/:uid/server/:node/stop-solr/",
+            "params": [
+              {
+                "name": "account_name",
+                "value": "",
+                "type": "path",
+                "description": "SearchStax account name"
+              },
+              {
+                "name": "uid",
+                "value": "",
+                "type": "path",
+                "description": "Deployment unique identifier"
+              },
+              {
+                "name": "node",
+                "value": "",
+                "type": "path",
+                "description": "Node identifier"
+              }
+            ]
+          },
+          "docs": "Deactivate an individual Solr node within the deployment."
+        },
+        {
+          "info": {
+            "name": "Get Node Status",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://app.searchstax.com/api/rest/v2/account/:account_name/deployment/:uid/server/:node/host-status/",
+            "params": [
+              {
+                "name": "account_name",
+                "value": "",
+                "type": "path",
+                "description": "SearchStax account name"
+              },
+              {
+                "name": "uid",
+                "value": "",
+                "type": "path",
+                "description": "Deployment unique identifier"
+              },
+              {
+                "name": "node",
+                "value": "",
+                "type": "path",
+                "description": "Node identifier"
+              }
+            ]
+          },
+          "docs": "Retrieve operational status of a specific deployment node."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Plans",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List Plans",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://app.searchstax.com/api/rest/v2/account/:account_name/plan/",
+            "params": [
+              {
+                "name": "account_name",
+                "value": "",
+                "type": "path",
+                "description": "SearchStax account name"
+              },
+              {
+                "name": "application",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "plan_type",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Enumerate accessible deployment plans and corresponding regional availability."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Usage",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get Usage",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://app.searchstax.com/api/rest/v2/account/:account_name/usage/:year/:month/",
+            "params": [
+              {
+                "name": "account_name",
+                "value": "",
+                "type": "path",
+                "description": "SearchStax account name"
+              },
+              {
+                "name": "year",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "month",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "List billable events for dedicated deployments during a specified period."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}
