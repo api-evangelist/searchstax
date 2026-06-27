@@ -97,7 +97,7 @@ common:
   - url: json-ld/searchstax-context.jsonld
     type: JSONLDContext
   - url: examples/searchstax-list-deployments-example.json
-    type: Example
+    type: Examples
   - url: rules/searchstax-rules.yml
     type: SpectralRuleset
   - url: vocabulary/searchstax-vocabulary.yml
