@@ -1,0 +1,13 @@
+generated: '2026-07-11'
+method: derived
+source: openapi/searchstax-provisioning-openapi.yml
+summary:
+  types:
+  - http
+schemes:
+- name: tokenAuth
+  type: http
+  scheme: bearer
+  description: Token obtained from /obtain-auth-token/ endpoint
+  sources:
+  - openapi/searchstax-provisioning-openapi.yml

@@ -67,6 +67,12 @@ maintainers:
     email: kin@apievangelist.com
 specificationVersion: '0.19'
 common:
+  - type: TrustCenter
+    url: security/searchstax-trust-center.yml
+  - type: DomainSecurity
+    url: security/searchstax-domain-security.yml
+  - type: Authentication
+    url: authentication/searchstax-authentication.yml
   - type: LinkedIn
     url: https://www.linkedin.com/company/searchstax
   - name: Website
@@ -104,3 +110,5 @@ common:
     type: Vocabulary
   - type: Integrations
     url: https://www.searchstax.com/partners/
+  - url: https://www.searchstax.com/blog/
+    type: Blog
