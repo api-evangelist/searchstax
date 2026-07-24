@@ -1,0 +1,80 @@
+openapi: 3.0.3
+info:
+  title: SearchStax Provisioning Authentication Usage API
+  description: The SearchStax Provisioning API is a REST interface for creating and managing Solr deployments in the SearchStax Managed Search cloud. It supports deployment lifecycle management including creation, deletion, restart, backup and restore, node management, authentication configuration, webhook management, and usage reporting.
+  version: 2.0.0
+  contact:
+    url: https://www.searchstax.com/docs/searchstax-cloud-apis-overview/
+servers:
+- url: https://app.searchstax.com/api/rest/v2
+  description: SearchStax Provisioning API v2
+security:
+- tokenAuth: []
+tags:
+- name: Usage
+paths:
+  /account/{account_name}/usage/{year}/{month}/:
+    get:
+      operationId: getUsage
+      summary: Get Usage
+      description: List billable events for dedicated deployments during a specified period.
+      tags:
+      - Usage
+      parameters:
+      - $ref: '#/components/parameters/accountName'
+      - name: year
+        in: path
+        required: true
+        schema:
+          type: integer
+      - name: month
+        in: path
+        required: true
+        schema:
+          type: integer
+          minimum: 1
+          maximum: 12
+      responses:
+        '200':
+          description: Usage data for the specified period
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UsageReport'
+components:
+  parameters:
+    accountName:
+      name: account_name
+      in: path
+      required: true
+      description: SearchStax account name
+      schema:
+        type: string
+  schemas:
+    UsageReport:
+      type: object
+      properties:
+        account:
+          type: string
+        year:
+          type: integer
+        month:
+          type: integer
+        deployments:
+          type: array
+          items:
+            type: object
+            properties:
+              uid:
+                type: string
+              name:
+                type: string
+              hours:
+                type: number
+              cost:
+                type: number
+  securitySchemes:
+    tokenAuth:
+      type: http
+      scheme: bearer
+      description: Token obtained from /obtain-auth-token/ endpoint

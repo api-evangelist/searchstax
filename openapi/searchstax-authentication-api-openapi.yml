@@ -1,0 +1,99 @@
+openapi: 3.0.3
+info:
+  title: SearchStax Provisioning Authentication API
+  description: The SearchStax Provisioning API is a REST interface for creating and managing Solr deployments in the SearchStax Managed Search cloud. It supports deployment lifecycle management including creation, deletion, restart, backup and restore, node management, authentication configuration, webhook management, and usage reporting.
+  version: 2.0.0
+  contact:
+    url: https://www.searchstax.com/docs/searchstax-cloud-apis-overview/
+servers:
+- url: https://app.searchstax.com/api/rest/v2
+  description: SearchStax Provisioning API v2
+security:
+- tokenAuth: []
+tags:
+- name: Authentication
+paths:
+  /obtain-auth-token/:
+    post:
+      operationId: obtainAuthToken
+      summary: Obtain Auth Token
+      description: Exchange username and password credentials for a time-limited authentication token. Tokens expire after 24 hours and must be included in subsequent API requests in the Authorization header.
+      tags:
+      - Authentication
+      security: []
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              required:
+              - username
+              - password
+              properties:
+                username:
+                  type: string
+                  description: SearchStax account username
+                password:
+                  type: string
+                  description: SearchStax account password
+      responses:
+        '200':
+          description: Authentication token returned
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  token:
+                    type: string
+                    description: Authentication token valid for 24 hours
+        '400':
+          description: Invalid credentials
+  /account/{account_name}/apikey/:
+    post:
+      operationId: createApiKey
+      summary: Create API Key
+      description: Create a new API key for the account.
+      tags:
+      - Authentication
+      parameters:
+      - $ref: '#/components/parameters/accountName'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: Descriptive name for the API key
+      responses:
+        '201':
+          description: API key created
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  key:
+                    type: string
+                  name:
+                    type: string
+                  created:
+                    type: string
+                    format: date-time
+components:
+  parameters:
+    accountName:
+      name: account_name
+      in: path
+      required: true
+      description: SearchStax account name
+      schema:
+        type: string
+  securitySchemes:
+    tokenAuth:
+      type: http
+      scheme: bearer
+      description: Token obtained from /obtain-auth-token/ endpoint

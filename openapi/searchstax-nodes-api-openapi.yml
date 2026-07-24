@@ -1,0 +1,141 @@
+openapi: 3.0.3
+info:
+  title: SearchStax Provisioning Authentication Nodes API
+  description: The SearchStax Provisioning API is a REST interface for creating and managing Solr deployments in the SearchStax Managed Search cloud. It supports deployment lifecycle management including creation, deletion, restart, backup and restore, node management, authentication configuration, webhook management, and usage reporting.
+  version: 2.0.0
+  contact:
+    url: https://www.searchstax.com/docs/searchstax-cloud-apis-overview/
+servers:
+- url: https://app.searchstax.com/api/rest/v2
+  description: SearchStax Provisioning API v2
+security:
+- tokenAuth: []
+tags:
+- name: Nodes
+paths:
+  /account/{account_name}/deployment/{uid}/server/:
+    get:
+      operationId: listNodes
+      summary: List Nodes
+      description: Returns all nodes comprising the deployment with addresses and status details.
+      tags:
+      - Nodes
+      parameters:
+      - $ref: '#/components/parameters/accountName'
+      - $ref: '#/components/parameters/deploymentUid'
+      responses:
+        '200':
+          description: List of deployment nodes
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Node'
+  /account/{account_name}/deployment/{uid}/server/{node}/start-solr/:
+    post:
+      operationId: startSolrNode
+      summary: Start Solr Node
+      description: Activate an individual Solr node within the deployment.
+      tags:
+      - Nodes
+      parameters:
+      - $ref: '#/components/parameters/accountName'
+      - $ref: '#/components/parameters/deploymentUid'
+      - $ref: '#/components/parameters/node'
+      responses:
+        '200':
+          description: Node start initiated
+  /account/{account_name}/deployment/{uid}/server/{node}/stop-solr/:
+    post:
+      operationId: stopSolrNode
+      summary: Stop Solr Node
+      description: Deactivate an individual Solr node within the deployment.
+      tags:
+      - Nodes
+      parameters:
+      - $ref: '#/components/parameters/accountName'
+      - $ref: '#/components/parameters/deploymentUid'
+      - $ref: '#/components/parameters/node'
+      responses:
+        '200':
+          description: Node stop initiated
+  /account/{account_name}/deployment/{uid}/server/{node}/host-status/:
+    get:
+      operationId: getNodeStatus
+      summary: Get Node Status
+      description: Retrieve operational status of a specific deployment node.
+      tags:
+      - Nodes
+      parameters:
+      - $ref: '#/components/parameters/accountName'
+      - $ref: '#/components/parameters/deploymentUid'
+      - $ref: '#/components/parameters/node'
+      responses:
+        '200':
+          description: Node status details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NodeStatus'
+components:
+  schemas:
+    NodeStatus:
+      type: object
+      properties:
+        name:
+          type: string
+        status:
+          type: string
+        uptime:
+          type: integer
+          description: Uptime in seconds
+        cpu_percent:
+          type: number
+        memory_percent:
+          type: number
+    Node:
+      type: object
+      properties:
+        name:
+          type: string
+        role:
+          type: string
+          enum:
+          - solr
+          - zookeeper
+        address:
+          type: string
+        status:
+          type: string
+          enum:
+          - running
+          - stopped
+          - error
+  parameters:
+    accountName:
+      name: account_name
+      in: path
+      required: true
+      description: SearchStax account name
+      schema:
+        type: string
+    deploymentUid:
+      name: uid
+      in: path
+      required: true
+      description: Deployment unique identifier
+      schema:
+        type: string
+    node:
+      name: node
+      in: path
+      required: true
+      description: Node identifier
+      schema:
+        type: string
+  securitySchemes:
+    tokenAuth:
+      type: http
+      scheme: bearer
+      description: Token obtained from /obtain-auth-token/ endpoint

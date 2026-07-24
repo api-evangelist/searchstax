@@ -1,0 +1,99 @@
+openapi: 3.0.3
+info:
+  title: SearchStax Provisioning Authentication Backup API
+  description: The SearchStax Provisioning API is a REST interface for creating and managing Solr deployments in the SearchStax Managed Search cloud. It supports deployment lifecycle management including creation, deletion, restart, backup and restore, node management, authentication configuration, webhook management, and usage reporting.
+  version: 2.0.0
+  contact:
+    url: https://www.searchstax.com/docs/searchstax-cloud-apis-overview/
+servers:
+- url: https://app.searchstax.com/api/rest/v2
+  description: SearchStax Provisioning API v2
+security:
+- tokenAuth: []
+tags:
+- name: Backup
+paths:
+  /account/{account_name}/deployment/{uid}/backup/:
+    get:
+      operationId: listBackups
+      summary: List Backups
+      description: List all existing backups for a deployment.
+      tags:
+      - Backup
+      parameters:
+      - $ref: '#/components/parameters/accountName'
+      - $ref: '#/components/parameters/deploymentUid'
+      responses:
+        '200':
+          description: List of backups
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Backup'
+    post:
+      operationId: createBackup
+      summary: Create Backup
+      description: Create a new backup of the deployment.
+      tags:
+      - Backup
+      parameters:
+      - $ref: '#/components/parameters/accountName'
+      - $ref: '#/components/parameters/deploymentUid'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: Optional backup name
+      responses:
+        '201':
+          description: Backup created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Backup'
+components:
+  schemas:
+    Backup:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        status:
+          type: string
+          enum:
+          - in_progress
+          - completed
+          - failed
+        created:
+          type: string
+          format: date-time
+        size_bytes:
+          type: integer
+  parameters:
+    accountName:
+      name: account_name
+      in: path
+      required: true
+      description: SearchStax account name
+      schema:
+        type: string
+    deploymentUid:
+      name: uid
+      in: path
+      required: true
+      description: Deployment unique identifier
+      schema:
+        type: string
+  securitySchemes:
+    tokenAuth:
+      type: http
+      scheme: bearer
+      description: Token obtained from /obtain-auth-token/ endpoint

@@ -1,0 +1,79 @@
+openapi: 3.0.3
+info:
+  title: SearchStax Provisioning Authentication Plans API
+  description: The SearchStax Provisioning API is a REST interface for creating and managing Solr deployments in the SearchStax Managed Search cloud. It supports deployment lifecycle management including creation, deletion, restart, backup and restore, node management, authentication configuration, webhook management, and usage reporting.
+  version: 2.0.0
+  contact:
+    url: https://www.searchstax.com/docs/searchstax-cloud-apis-overview/
+servers:
+- url: https://app.searchstax.com/api/rest/v2
+  description: SearchStax Provisioning API v2
+security:
+- tokenAuth: []
+tags:
+- name: Plans
+paths:
+  /account/{account_name}/plan/:
+    get:
+      operationId: listPlans
+      summary: List Plans
+      description: Enumerate accessible deployment plans and corresponding regional availability.
+      tags:
+      - Plans
+      parameters:
+      - $ref: '#/components/parameters/accountName'
+      - name: application
+        in: query
+        schema:
+          type: string
+          default: Solr
+      - name: plan_type
+        in: query
+        schema:
+          type: string
+          default: DedicatedPlan
+      responses:
+        '200':
+          description: List of available plans
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Plan'
+components:
+  schemas:
+    Plan:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        application:
+          type: string
+        plan_type:
+          type: string
+        cpu:
+          type: integer
+        memory_gb:
+          type: integer
+        storage_gb:
+          type: integer
+        regions:
+          type: array
+          items:
+            type: string
+  parameters:
+    accountName:
+      name: account_name
+      in: path
+      required: true
+      description: SearchStax account name
+      schema:
+        type: string
+  securitySchemes:
+    tokenAuth:
+      type: http
+      scheme: bearer
+      description: Token obtained from /obtain-auth-token/ endpoint
