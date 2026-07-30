@@ -1,44 +1,106 @@
 aid: searchstax
 url: https://raw.githubusercontent.com/api-evangelist/searchstax/refs/heads/main/apis.yml
 apis:
-  - aid: searchstax:searchstax-provisioning-api
-    name: SearchStax Provisioning API
-    tags:
-      - Provisioning
-      - Solr
-      - Deployments
-      - Infrastructure
-    humanURL: https://www.searchstax.com/docs/searchstax-cloud-apis-overview/
-    baseURL: https://app.searchstax.com/api/rest/v2
-    properties:
-      - url: openapi/searchstax-provisioning-openapi.yml
-        type: OpenAPI
-      - url: https://www.searchstax.com/docs/searchstax-cloud-apis-overview/
-        type: Documentation
-      - url: https://www.searchstax.com/docs/searchstax-cloud-deployment-api/
-        type: Documentation
-    description: >-
-      The SearchStax Provisioning API is a REST interface for creating and managing Solr deployments in the SearchStax
-      Managed Search cloud. It supports deployment lifecycle management, backup and restore operations, node management,
-      plan listing, usage reporting, authentication configuration, webhook management, and ZooKeeper configuration.
-      Token-based authentication is used for most operations, with API key authentication available for a subset of
-      deployment management functions.
-  - aid: searchstax:searchstax-site-search-api
-    name: SearchStax Site Search API
-    tags:
-      - Search
-      - Site Search
-      - Studio
-      - Full-Text Search
-    humanURL: https://www.searchstax.com/docs/searchstudio/searchstax-studio-search-api/
-    baseURL: https://search.searchstax.com
-    properties:
-      - url: https://www.searchstax.com/docs/searchstudio/searchstax-studio-search-api/
-        type: Documentation
-    description: >-
-      The SearchStax Site Search API returns JSON search results from a SearchStax Studio Site Search application. It
-      provides real-time search via the /emselect endpoint, supporting faceted search, auto-suggest, popular searches,
-      related searches, and search analytics tracking.
+- aid: searchstax:searchstax-site-search-api
+  name: SearchStax Site Search API
+  tags:
+  - Search
+  - Site Search
+  - Studio
+  - Full-Text Search
+  humanURL: https://www.searchstax.com/docs/searchstudio/searchstax-studio-search-api/
+  baseURL: https://search.searchstax.com
+  properties:
+  - url: https://www.searchstax.com/docs/searchstudio/searchstax-studio-search-api/
+    type: Documentation
+  description: >-
+    The SearchStax Site Search API returns JSON search results from a SearchStax Studio Site Search application.
+    It provides real-time search via the /emselect endpoint, supporting faceted search, auto-suggest,
+    popular searches, related searches, and search analytics tracking.
+- aid: searchstax:searchstax-authentication-api
+  name: SearchStax Authentication API
+  description: The Authentication API from SearchStax — 2 operation(s) for authentication.
+  humanURL: https://www.searchstax.com/docs/searchstax-cloud-apis-overview/
+  baseURL: https://app.searchstax.com/api/rest/v2
+  tags:
+  - Authentication
+  properties:
+  - type: OpenAPI
+    url: openapi/searchstax-authentication-api-openapi.yml
+  - type: Documentation
+    url: https://www.searchstax.com/docs/searchstax-cloud-apis-overview/
+  - type: Documentation
+    url: https://www.searchstax.com/docs/searchstax-cloud-deployment-api/
+- aid: searchstax:searchstax-backup-api
+  name: SearchStax Backup API
+  description: The Backup API from SearchStax — 1 operation(s) for backup.
+  humanURL: https://www.searchstax.com/docs/searchstax-cloud-apis-overview/
+  baseURL: https://app.searchstax.com/api/rest/v2
+  tags:
+  - Backup
+  properties:
+  - type: OpenAPI
+    url: openapi/searchstax-backup-api-openapi.yml
+  - type: Documentation
+    url: https://www.searchstax.com/docs/searchstax-cloud-apis-overview/
+  - type: Documentation
+    url: https://www.searchstax.com/docs/searchstax-cloud-deployment-api/
+- aid: searchstax:searchstax-deployments-api
+  name: SearchStax Deployments API
+  description: The Deployments API from SearchStax — 5 operation(s) for deployments.
+  humanURL: https://www.searchstax.com/docs/searchstax-cloud-apis-overview/
+  baseURL: https://app.searchstax.com/api/rest/v2
+  tags:
+  - Deployments
+  properties:
+  - type: OpenAPI
+    url: openapi/searchstax-deployments-api-openapi.yml
+  - type: Documentation
+    url: https://www.searchstax.com/docs/searchstax-cloud-apis-overview/
+  - type: Documentation
+    url: https://www.searchstax.com/docs/searchstax-cloud-deployment-api/
+- aid: searchstax:searchstax-nodes-api
+  name: SearchStax Nodes API
+  description: The Nodes API from SearchStax — 4 operation(s) for nodes.
+  humanURL: https://www.searchstax.com/docs/searchstax-cloud-apis-overview/
+  baseURL: https://app.searchstax.com/api/rest/v2
+  tags:
+  - Nodes
+  properties:
+  - type: OpenAPI
+    url: openapi/searchstax-nodes-api-openapi.yml
+  - type: Documentation
+    url: https://www.searchstax.com/docs/searchstax-cloud-apis-overview/
+  - type: Documentation
+    url: https://www.searchstax.com/docs/searchstax-cloud-deployment-api/
+- aid: searchstax:searchstax-plans-api
+  name: SearchStax Plans API
+  description: The Plans API from SearchStax — 1 operation(s) for plans.
+  humanURL: https://www.searchstax.com/docs/searchstax-cloud-apis-overview/
+  baseURL: https://app.searchstax.com/api/rest/v2
+  tags:
+  - Plans
+  properties:
+  - type: OpenAPI
+    url: openapi/searchstax-plans-api-openapi.yml
+  - type: Documentation
+    url: https://www.searchstax.com/docs/searchstax-cloud-apis-overview/
+  - type: Documentation
+    url: https://www.searchstax.com/docs/searchstax-cloud-deployment-api/
+- aid: searchstax:searchstax-usage-api
+  name: SearchStax Usage API
+  description: The Usage API from SearchStax — 1 operation(s) for usage.
+  humanURL: https://www.searchstax.com/docs/searchstax-cloud-apis-overview/
+  baseURL: https://app.searchstax.com/api/rest/v2
+  tags:
+  - Usage
+  properties:
+  - type: OpenAPI
+    url: openapi/searchstax-usage-api-openapi.yml
+  - type: Documentation
+    url: https://www.searchstax.com/docs/searchstax-cloud-apis-overview/
+  - type: Documentation
+    url: https://www.searchstax.com/docs/searchstax-cloud-deployment-api/
 name: SearchStax
 tags:
   - Search
@@ -48,7 +110,20 @@ tags:
   - Full-Text Search
   - Site Search
 type: Index
-image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+accessModel:
+  pricing: freemium
+  onboarding: self-serve
+  trial: false
+  try_now: true
+  public: false
+  label: Freemium · Self-serve signup
+  confidence: high
+  source:
+  - plans
+  - authentication
+  generated: '2026-07-22'
+  method: derived
+image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/searchstax.png
 access: 3rd-Party
 created: '2026-05-02'
 modified: '2026-05-19'
