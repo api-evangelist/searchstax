@@ -1,0 +1,24 @@
+{
+  "provider": "searchstax",
+  "sources": [
+    "searchstax-authentication-api-openapi.yml",
+    "searchstax-backup-api-openapi.yml",
+    "searchstax-deployments-api-openapi.yml",
+    "searchstax-nodes-api-openapi.yml",
+    "searchstax-plans-api-openapi.yml",
+    "searchstax-usage-api-openapi.yml"
+  ],
+  "outputs": [
+    "searchstax-authentication-api-openapi.yml",
+    "searchstax-backup-api-openapi.yml",
+    "searchstax-deployments-api-openapi.yml",
+    "searchstax-nodes-api-openapi.yml",
+    "searchstax-plans-api-openapi.yml",
+    "searchstax-usage-api-openapi.yml"
+  ],
+  "archived": [],
+  "errors": [],
+  "warnings": [],
+  "notes": [],
+  "skipped": []
+}
