@@ -1,0 +1,78 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "SearchStax Provisioning Authentication Backup API",
+    "version": "2.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Backup",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List Backups",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://app.searchstax.com/api/rest/v2/account/:account_name/deployment/:uid/backup/",
+            "params": [
+              {
+                "name": "account_name",
+                "value": "",
+                "type": "path",
+                "description": "SearchStax account name"
+              },
+              {
+                "name": "uid",
+                "value": "",
+                "type": "path",
+                "description": "Deployment unique identifier"
+              }
+            ]
+          },
+          "docs": "List all existing backups for a deployment."
+        },
+        {
+          "info": {
+            "name": "Create Backup",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://app.searchstax.com/api/rest/v2/account/:account_name/deployment/:uid/backup/",
+            "params": [
+              {
+                "name": "account_name",
+                "value": "",
+                "type": "path",
+                "description": "SearchStax account name"
+              },
+              {
+                "name": "uid",
+                "value": "",
+                "type": "path",
+                "description": "Deployment unique identifier"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a new backup of the deployment."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

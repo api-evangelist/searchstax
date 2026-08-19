@@ -1,0 +1,53 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "SearchStax Provisioning Authentication Usage API",
+    "version": "2.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Usage",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get Usage",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://app.searchstax.com/api/rest/v2/account/:account_name/usage/:year/:month/",
+            "params": [
+              {
+                "name": "account_name",
+                "value": "",
+                "type": "path",
+                "description": "SearchStax account name"
+              },
+              {
+                "name": "year",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "month",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "List billable events for dedicated deployments during a specified period."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

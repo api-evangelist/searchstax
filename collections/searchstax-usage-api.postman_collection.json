@@ -1,0 +1,173 @@
+{
+  "item": [
+    {
+      "id": "e5341273-c4ba-4bf2-9e35-f1c9346c1630",
+      "name": "Usage",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "73bae9c4-c465-426e-a05a-8f32f00bc4c4",
+          "name": "Get Usage",
+          "request": {
+            "name": "Get Usage",
+            "description": {
+              "content": "List billable events for dedicated deployments during a specified period.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "account",
+                ":account_name",
+                "usage",
+                ":year",
+                ":month",
+                ""
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "account_name",
+                  "description": "(Required) SearchStax account name"
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "year",
+                  "description": "(Required) "
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "month",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "5aa6dadb-dfff-41b7-b42c-ae19aab59a80",
+              "name": "Usage data for the specified period",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "account",
+                    ":account_name",
+                    "usage",
+                    ":year",
+                    ":month",
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "account_name",
+                      "description": "(Required) SearchStax account name"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "year",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "month",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"account\": \"string\",\n  \"year\": 5611,\n  \"month\": 4885,\n  \"deployments\": [\n    {\n      \"uid\": \"string\",\n      \"name\": \"string\",\n      \"hours\": 3359.8119196550656,\n      \"cost\": 1934.2805897327598\n    },\n    {\n      \"uid\": \"string\",\n      \"name\": \"string\",\n      \"hours\": 2448.3939080063988,\n      \"cost\": 1471.3648598934935\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://app.searchstax.com/api/rest/v2",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "c5a9be46-c9a2-478f-b6bf-19cbe3848871",
+    "name": "SearchStax Provisioning Authentication Usage API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The SearchStax Provisioning API is a REST interface for creating and managing Solr deployments in the SearchStax Managed Search cloud. It supports deployment lifecycle management including creation, deletion, restart, backup and restore, node management, authentication configuration, webhook management, and usage reporting.",
+      "type": "text/plain"
+    }
+  }
+}

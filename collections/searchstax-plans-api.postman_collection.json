@@ -1,0 +1,161 @@
+{
+  "item": [
+    {
+      "id": "3f5be142-bfe3-48f2-8725-ec55f036f676",
+      "name": "Plans",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "30a06ea2-3fec-4635-b09f-6027e5818628",
+          "name": "List Plans",
+          "request": {
+            "name": "List Plans",
+            "description": {
+              "content": "Enumerate accessible deployment plans and corresponding regional availability.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "account",
+                ":account_name",
+                "plan",
+                ""
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "application",
+                  "value": "Solr"
+                },
+                {
+                  "disabled": false,
+                  "key": "plan_type",
+                  "value": "DedicatedPlan"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "account_name",
+                  "description": "(Required) SearchStax account name"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "97cefb13-2afb-4bd6-affc-6d83eca0a2c6",
+              "name": "List of available plans",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "account",
+                    ":account_name",
+                    "plan",
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "application",
+                      "value": "Solr"
+                    },
+                    {
+                      "key": "plan_type",
+                      "value": "DedicatedPlan"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "account_name",
+                      "description": "(Required) SearchStax account name"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"id\": \"string\",\n    \"name\": \"string\",\n    \"application\": \"string\",\n    \"plan_type\": \"string\",\n    \"cpu\": 2859,\n    \"memory_gb\": 9183,\n    \"storage_gb\": 1906,\n    \"regions\": [\n      \"string\",\n      \"string\"\n    ]\n  },\n  {\n    \"id\": \"string\",\n    \"name\": \"string\",\n    \"application\": \"string\",\n    \"plan_type\": \"string\",\n    \"cpu\": 7768,\n    \"memory_gb\": 8685,\n    \"storage_gb\": 2358,\n    \"regions\": [\n      \"string\",\n      \"string\"\n    ]\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://app.searchstax.com/api/rest/v2",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "763c54f2-0876-4458-8ae1-84fd8682cebe",
+    "name": "SearchStax Provisioning Authentication Plans API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The SearchStax Provisioning API is a REST interface for creating and managing Solr deployments in the SearchStax Managed Search cloud. It supports deployment lifecycle management including creation, deletion, restart, backup and restore, node management, authentication configuration, webhook management, and usage reporting.",
+      "type": "text/plain"
+    }
+  }
+}

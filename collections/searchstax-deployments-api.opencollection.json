@@ -1,0 +1,202 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "SearchStax Provisioning Authentication Deployments API",
+    "version": "2.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Deployments",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List Deployments",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://app.searchstax.com/api/rest/v2/account/:account_name/deployment/",
+            "params": [
+              {
+                "name": "account_name",
+                "value": "",
+                "type": "path",
+                "description": "SearchStax account name"
+              },
+              {
+                "name": "page",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "page_size",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Retrieve all Solr deployments for the specified account with pagination."
+        },
+        {
+          "info": {
+            "name": "Create Deployment",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://app.searchstax.com/api/rest/v2/account/:account_name/deployment/",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a new Solr deployment. Provisioning may take up to an hour to complete. Only Account Owner, Admin, or Technical Contact roles may invoke this endpoint."
+        },
+        {
+          "info": {
+            "name": "Get Deployment",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://app.searchstax.com/api/rest/v2/account/:account_name/deployment/:uid/",
+            "params": [
+              {
+                "name": "account_name",
+                "value": "",
+                "type": "path",
+                "description": "SearchStax account name"
+              },
+              {
+                "name": "uid",
+                "value": "",
+                "type": "path",
+                "description": "Deployment unique identifier"
+              }
+            ]
+          },
+          "docs": "Retrieve comprehensive details about a specific Solr deployment."
+        },
+        {
+          "info": {
+            "name": "Delete Deployment",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://app.searchstax.com/api/rest/v2/account/:account_name/deployment/:uid/",
+            "params": [
+              {
+                "name": "account_name",
+                "value": "",
+                "type": "path",
+                "description": "SearchStax account name"
+              },
+              {
+                "name": "uid",
+                "value": "",
+                "type": "path",
+                "description": "Deployment unique identifier"
+              },
+              {
+                "name": "retain_backups",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Delete a deployment. Subject to termination lock restrictions. Optionally retain scheduled backups after deletion."
+        },
+        {
+          "info": {
+            "name": "Get Deployment Health",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://app.searchstax.com/api/rest/v2/account/:account_name/deployment/:uid/deployment-health/",
+            "params": [
+              {
+                "name": "account_name",
+                "value": "",
+                "type": "path",
+                "description": "SearchStax account name"
+              },
+              {
+                "name": "uid",
+                "value": "",
+                "type": "path",
+                "description": "Deployment unique identifier"
+              }
+            ]
+          },
+          "docs": "Returns the health status of the deployment as OK, Warn, or Error."
+        },
+        {
+          "info": {
+            "name": "Get Collection Health",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://app.searchstax.com/api/rest/v2/account/:account_name/deployment/:uid/collection-health/",
+            "params": [
+              {
+                "name": "account_name",
+                "value": "",
+                "type": "path",
+                "description": "SearchStax account name"
+              },
+              {
+                "name": "uid",
+                "value": "",
+                "type": "path",
+                "description": "Deployment unique identifier"
+              }
+            ]
+          },
+          "docs": "Checks whether all Solr collections are healthy or degraded."
+        },
+        {
+          "info": {
+            "name": "Rolling Restart",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://app.searchstax.com/api/rest/v2/account/:account_name/deployment/:uid/rolling-restart/",
+            "params": [
+              {
+                "name": "account_name",
+                "value": "",
+                "type": "path",
+                "description": "SearchStax account name"
+              },
+              {
+                "name": "uid",
+                "value": "",
+                "type": "path",
+                "description": "Deployment unique identifier"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Sequentially restart cluster nodes without downtime. Can restart Solr nodes, ZooKeeper nodes, or both."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

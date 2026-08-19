@@ -1,0 +1,142 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "SearchStax Provisioning Authentication Nodes API",
+    "version": "2.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Nodes",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List Nodes",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://app.searchstax.com/api/rest/v2/account/:account_name/deployment/:uid/server/",
+            "params": [
+              {
+                "name": "account_name",
+                "value": "",
+                "type": "path",
+                "description": "SearchStax account name"
+              },
+              {
+                "name": "uid",
+                "value": "",
+                "type": "path",
+                "description": "Deployment unique identifier"
+              }
+            ]
+          },
+          "docs": "Returns all nodes comprising the deployment with addresses and status details."
+        },
+        {
+          "info": {
+            "name": "Start Solr Node",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://app.searchstax.com/api/rest/v2/account/:account_name/deployment/:uid/server/:node/start-solr/",
+            "params": [
+              {
+                "name": "account_name",
+                "value": "",
+                "type": "path",
+                "description": "SearchStax account name"
+              },
+              {
+                "name": "uid",
+                "value": "",
+                "type": "path",
+                "description": "Deployment unique identifier"
+              },
+              {
+                "name": "node",
+                "value": "",
+                "type": "path",
+                "description": "Node identifier"
+              }
+            ]
+          },
+          "docs": "Activate an individual Solr node within the deployment."
+        },
+        {
+          "info": {
+            "name": "Stop Solr Node",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://app.searchstax.com/api/rest/v2/account/:account_name/deployment/:uid/server/:node/stop-solr/",
+            "params": [
+              {
+                "name": "account_name",
+                "value": "",
+                "type": "path",
+                "description": "SearchStax account name"
+              },
+              {
+                "name": "uid",
+                "value": "",
+                "type": "path",
+                "description": "Deployment unique identifier"
+              },
+              {
+                "name": "node",
+                "value": "",
+                "type": "path",
+                "description": "Node identifier"
+              }
+            ]
+          },
+          "docs": "Deactivate an individual Solr node within the deployment."
+        },
+        {
+          "info": {
+            "name": "Get Node Status",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://app.searchstax.com/api/rest/v2/account/:account_name/deployment/:uid/server/:node/host-status/",
+            "params": [
+              {
+                "name": "account_name",
+                "value": "",
+                "type": "path",
+                "description": "SearchStax account name"
+              },
+              {
+                "name": "uid",
+                "value": "",
+                "type": "path",
+                "description": "Deployment unique identifier"
+              },
+              {
+                "name": "node",
+                "value": "",
+                "type": "path",
+                "description": "Node identifier"
+              }
+            ]
+          },
+          "docs": "Retrieve operational status of a specific deployment node."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}
