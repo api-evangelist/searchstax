@@ -67,6 +67,8 @@ apis:
   humanURL: https://www.searchstax.com/docs/searchstax-cloud-apis-overview/
   baseURL: https://app.searchstax.com/api/rest/v2
   tags:
+  - Node
+  tags_raw:
   - Nodes
   properties:
   - type: OpenAPI
