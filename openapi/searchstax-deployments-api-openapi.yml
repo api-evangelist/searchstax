@@ -1,6 +1,6 @@
-openapi: 3.0.3
+openapi: 3.2.0
 info:
-  title: SearchStax Provisioning Authentication Deployments API
+  title: SearchStax Provisioning Deployments API
   description: The SearchStax Provisioning API is a REST interface for creating and managing Solr deployments in the SearchStax Managed Search cloud. It supports deployment lifecycle management including creation, deletion, restart, backup and restore, node management, authentication configuration, webhook management, and usage reporting.
   version: 2.0.0
   contact:
@@ -43,11 +43,13 @@ paths:
                   count:
                     type: integer
                   next:
-                    type: string
-                    nullable: true
+                    type:
+                    - string
+                    - 'null'
                   previous:
-                    type: string
-                    nullable: true
+                    type:
+                    - string
+                    - 'null'
                   results:
                     type: array
                     items:
@@ -282,18 +284,18 @@ components:
           type: string
           format: date-time
   parameters:
-    accountName:
-      name: account_name
-      in: path
-      required: true
-      description: SearchStax account name
-      schema:
-        type: string
     deploymentUid:
       name: uid
       in: path
       required: true
       description: Deployment unique identifier
+      schema:
+        type: string
+    accountName:
+      name: account_name
+      in: path
+      required: true
+      description: SearchStax account name
       schema:
         type: string
   securitySchemes:
