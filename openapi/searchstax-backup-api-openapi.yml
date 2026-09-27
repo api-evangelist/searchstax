@@ -59,18 +59,18 @@ paths:
                 $ref: '#/components/schemas/Backup'
 components:
   parameters:
-    accountName:
-      name: account_name
-      in: path
-      required: true
-      description: SearchStax account name
-      schema:
-        type: string
     deploymentUid:
       name: uid
       in: path
       required: true
       description: Deployment unique identifier
+      schema:
+        type: string
+    accountName:
+      name: account_name
+      in: path
+      required: true
+      description: SearchStax account name
       schema:
         type: string
   schemas:
