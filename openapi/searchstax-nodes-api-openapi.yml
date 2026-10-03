@@ -79,6 +79,28 @@ paths:
               schema:
                 $ref: '#/components/schemas/NodeStatus'
 components:
+  parameters:
+    deploymentUid:
+      name: uid
+      in: path
+      required: true
+      description: Deployment unique identifier
+      schema:
+        type: string
+    accountName:
+      name: account_name
+      in: path
+      required: true
+      description: SearchStax account name
+      schema:
+        type: string
+    node:
+      name: node
+      in: path
+      required: true
+      description: Node identifier
+      schema:
+        type: string
   schemas:
     Node:
       type: object
@@ -112,28 +134,6 @@ components:
           type: number
         memory_percent:
           type: number
-  parameters:
-    accountName:
-      name: account_name
-      in: path
-      required: true
-      description: SearchStax account name
-      schema:
-        type: string
-    node:
-      name: node
-      in: path
-      required: true
-      description: Node identifier
-      schema:
-        type: string
-    deploymentUid:
-      name: uid
-      in: path
-      required: true
-      description: Deployment unique identifier
-      schema:
-        type: string
   securitySchemes:
     tokenAuth:
       type: http
