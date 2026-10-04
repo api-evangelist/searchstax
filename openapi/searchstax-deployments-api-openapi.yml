@@ -204,21 +204,6 @@ paths:
         '400':
           description: Invalid request
 components:
-  parameters:
-    deploymentUid:
-      name: uid
-      in: path
-      required: true
-      description: Deployment unique identifier
-      schema:
-        type: string
-    accountName:
-      name: account_name
-      in: path
-      required: true
-      description: SearchStax account name
-      schema:
-        type: string
   schemas:
     Deployment:
       type: object
@@ -298,6 +283,21 @@ components:
         private_vpc:
           type: integer
           description: Private VPC ID for network isolation
+  parameters:
+    accountName:
+      name: account_name
+      in: path
+      required: true
+      description: SearchStax account name
+      schema:
+        type: string
+    deploymentUid:
+      name: uid
+      in: path
+      required: true
+      description: Deployment unique identifier
+      schema:
+        type: string
   securitySchemes:
     tokenAuth:
       type: http

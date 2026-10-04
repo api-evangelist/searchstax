@@ -42,14 +42,6 @@ paths:
                 items:
                   $ref: '#/components/schemas/Plan'
 components:
-  parameters:
-    accountName:
-      name: account_name
-      in: path
-      required: true
-      description: SearchStax account name
-      schema:
-        type: string
   schemas:
     Plan:
       type: object
@@ -72,6 +64,14 @@ components:
           type: array
           items:
             type: string
+  parameters:
+    accountName:
+      name: account_name
+      in: path
+      required: true
+      description: SearchStax account name
+      schema:
+        type: string
   securitySchemes:
     tokenAuth:
       type: http
