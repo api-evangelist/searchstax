@@ -158,6 +158,9 @@ maintainers:
     email: kin@apievangelist.com
 specificationVersion: '0.23'
 common:
+  - type: CapabilityMap
+    url: capabilities/searchstax-capability-edges.yml
+    name: SearchStax Business Capability Map
   - type: AgenticAccess
     url: agentic-access/searchstax-agentic-access.yml
   - type: TrustCenter
