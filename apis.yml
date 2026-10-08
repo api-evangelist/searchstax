@@ -158,6 +158,12 @@ maintainers:
     email: kin@apievangelist.com
 specificationVersion: '0.23'
 common:
+  - type: Plans
+    url: plans/searchstax-plans-pricing.yml
+  - type: RateLimits
+    url: rate-limits/searchstax-rate-limits.yml
+  - type: FinOps
+    url: finops/searchstax-finops.yml
   - type: CapabilityMap
     url: capabilities/searchstax-capability-edges.yml
     name: SearchStax Business Capability Map
