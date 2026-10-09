@@ -1,0 +1,31 @@
+# Front Door AI Index — searchstax — 2026-09-17
+# AI vocabulary counted on the provider's root page. Generated; do not edit.
+# `score` is null unless ownership is `own` — see front_door_ai.py.
+front_door_ai:
+  slug: searchstax
+  lexicon_version: '1.0'
+  probed_at: '2026-09-25'
+  host: www.searchstax.com
+  final_host: www.searchstax.com
+  ownership: own
+  owner: searchstax
+  shares_host_with: null
+  inherited_from: null
+  alias_of: null
+  verdict: scored
+  score: 15
+  band: 5
+  band_label: prominent
+  host_score: 15
+  density: 16.2
+  words: 926
+  tiers:
+    agentic: 0
+    core: 15
+    model: 0
+  ambiguous: 4
+  top_terms:
+    AI: 13
+    automation: 2
+    gen ai: 2
+    smart: 2
