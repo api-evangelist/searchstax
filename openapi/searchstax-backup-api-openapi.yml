@@ -58,21 +58,6 @@ paths:
               schema:
                 $ref: '#/components/schemas/Backup'
 components:
-  parameters:
-    accountName:
-      name: account_name
-      in: path
-      required: true
-      description: SearchStax account name
-      schema:
-        type: string
-    deploymentUid:
-      name: uid
-      in: path
-      required: true
-      description: Deployment unique identifier
-      schema:
-        type: string
   schemas:
     Backup:
       type: object
@@ -92,6 +77,21 @@ components:
           format: date-time
         size_bytes:
           type: integer
+  parameters:
+    accountName:
+      name: account_name
+      in: path
+      required: true
+      description: SearchStax account name
+      schema:
+        type: string
+    deploymentUid:
+      name: uid
+      in: path
+      required: true
+      description: Deployment unique identifier
+      schema:
+        type: string
   securitySchemes:
     tokenAuth:
       type: http

@@ -205,37 +205,6 @@ paths:
           description: Invalid request
 components:
   schemas:
-    Deployment:
-      type: object
-      properties:
-        uid:
-          type: string
-        name:
-          type: string
-        status:
-          type: string
-          enum:
-          - provisioning
-          - running
-          - stopped
-          - error
-        application:
-          type: string
-        application_version:
-          type: string
-        plan:
-          type: string
-        cloud_provider_id:
-          type: string
-        region_id:
-          type: string
-        termination_lock:
-          type: boolean
-        solr_url:
-          type: string
-        created:
-          type: string
-          format: date-time
     CreateDeploymentRequest:
       type: object
       required:
@@ -283,6 +252,37 @@ components:
         private_vpc:
           type: integer
           description: Private VPC ID for network isolation
+    Deployment:
+      type: object
+      properties:
+        uid:
+          type: string
+        name:
+          type: string
+        status:
+          type: string
+          enum:
+          - provisioning
+          - running
+          - stopped
+          - error
+        application:
+          type: string
+        application_version:
+          type: string
+        plan:
+          type: string
+        cloud_provider_id:
+          type: string
+        region_id:
+          type: string
+        termination_lock:
+          type: boolean
+        solr_url:
+          type: string
+        created:
+          type: string
+          format: date-time
   parameters:
     accountName:
       name: account_name

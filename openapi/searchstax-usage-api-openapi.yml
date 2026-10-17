@@ -42,14 +42,6 @@ paths:
               schema:
                 $ref: '#/components/schemas/UsageReport'
 components:
-  parameters:
-    accountName:
-      name: account_name
-      in: path
-      required: true
-      description: SearchStax account name
-      schema:
-        type: string
   schemas:
     UsageReport:
       type: object
@@ -73,6 +65,14 @@ components:
                 type: number
               cost:
                 type: number
+  parameters:
+    accountName:
+      name: account_name
+      in: path
+      required: true
+      description: SearchStax account name
+      schema:
+        type: string
   securitySchemes:
     tokenAuth:
       type: http
