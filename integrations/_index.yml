@@ -45,3 +45,16 @@
     detected: '2026-10-20'
   status: not-a-workflow
   arazzo: null
+- slug: searchstax-drupal-own
+  label: Drupal (own)
+  partner: drupal
+  partner_name: Drupal (own)
+  category: Drupal contributed module
+  type: marketplace
+  marketplace: own
+  channel: partner-built
+  evidence: https://www.drupal.org/project/search_api_searchstax
+  source: edge
+  relationship: platform-app
+  status: not-a-workflow
+  arazzo: null
