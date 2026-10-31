@@ -1,4 +1,4 @@
-# SearchStax (searchstax)
+# SearchStax
 
 <!-- API-EVANGELIST-PROVENANCE:BEGIN -->
 > ### About this repository
@@ -66,91 +66,165 @@
 
 SearchStax is a managed Solr search infrastructure company that provides cloud-hosted Apache Solr deployments and a Site Search platform. SearchStax eliminates the complexity of running and scaling Solr by offering fully managed dedicated and serverless deployments on AWS, Azure, and Google Cloud. The platform exposes a comprehensive REST Provisioning API for managing deployments, backup and restore, authentication, webhooks, and infrastructure configuration, along with a Site Search API for delivering search results from SearchStax Studio applications.
 
-**APIs.json:** [https://raw.githubusercontent.com/api-evangelist/searchstax/refs/heads/main/apis.yml](https://raw.githubusercontent.com/api-evangelist/searchstax/refs/heads/main/apis.yml)
+**Areas:** Search · Solr · Managed Search · Search Infrastructure · Full-Text Search · Site Search
 
-## Scope
+## SearchStax on APIs.io
 
-- **Type:** Index
-- **Position:** Consuming
-- **Access:** 3rd-Party
+Everything profiled for SearchStax is published on APIs.io rather than in this repository. Start at the provider page — **[apis.io/providers/searchstax/](https://apis.io/providers/searchstax/)** — or go straight to one of the APIs or properties below.
 
-## Tags
+### APIs (7)
 
-- Search
-- Solr
-- Managed Search
-- Search Infrastructure
-- Full-Text Search
-- Site Search
+- [SearchStax Site Search API](https://apis.io/apis/searchstax/searchstax-site-search-api/) — The SearchStax Site Search API returns JSON search results from a SearchStax Studio Site Search application. It provides real-time search via the /emselect…
+- [SearchStax Authentication API](https://apis.io/apis/searchstax/searchstax-authentication-api/) — The Authentication API from SearchStax — 2 operation(s) for authentication.
+- [SearchStax Backup API](https://apis.io/apis/searchstax/searchstax-backup-api/) — The Backup API from SearchStax — 1 operation(s) for backup.
+- [SearchStax Deployments API](https://apis.io/apis/searchstax/searchstax-deployments-api/) — The Deployments API from SearchStax — 5 operation(s) for deployments.
+- [SearchStax Nodes API](https://apis.io/apis/searchstax/searchstax-nodes-api/) — The Nodes API from SearchStax — 4 operation(s) for nodes.
+- [SearchStax Plans API](https://apis.io/apis/searchstax/searchstax-plans-api/) — The Plans API from SearchStax — 1 operation(s) for plans.
+- [SearchStax Usage API](https://apis.io/apis/searchstax/searchstax-usage-api/) — The Usage API from SearchStax — 1 operation(s) for usage.
 
-## Timestamps
+### Published properties
 
-- **Created:** 2026-05-02
-- **Modified:** 2026-05-19
+Each property below is a page on APIs.io carrying the machine-readable artifact and what it says.
 
-## APIs
+#### Agentic access (1)
 
-### SearchStax Provisioning API
+Which operations an agent can call, which act, and which need a human in the loop.
 
-The SearchStax Provisioning API is a REST interface for creating and managing Solr deployments in the SearchStax Managed Search cloud. It supports deployment lifecycle management, backup and restore operations, node management, plan listing, usage reporting, authentication configuration, webhook management, and ZooKeeper configuration. Token-based authentication is used for most operations, with API key authentication available for a subset of deployment management functions.
+- [Searchstax Agentic Access](https://apis.io/agentic-access/searchstax/searchstax-agentic-access/)
 
-- **Human URL:** [https://www.searchstax.com/docs/searchstax-cloud-apis-overview/](https://www.searchstax.com/docs/searchstax-cloud-apis-overview/)
-- **Base URL:** `https://app.searchstax.com/api/rest/v2`
+#### JSON Schema (1)
 
-#### Tags
+The data models the API reads and writes.
 
-- Provisioning
-- Solr
-- Deployments
-- Infrastructure
+- [SearchStax Deployment](https://apis.io/schemas/searchstax/searchstax-deployment/)
 
-#### Properties
+#### JSON Structure (1)
 
-- [OpenAPI](openapi/searchstax-provisioning-openapi.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [Postman Collection](collections/searchstax-provisioning.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/searchstax-provisioning.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Documentation](https://www.searchstax.com/docs/searchstax-cloud-apis-overview/)
-- [Documentation](https://www.searchstax.com/docs/searchstax-cloud-deployment-api/)
+Data models expressed in JSON Structure.
 
-### SearchStax Site Search API
+- [Searchstax Deployment Structure](https://apis.io/json-structure/searchstax/searchstax-deployment-structure/)
 
-The SearchStax Site Search API returns JSON search results from a SearchStax Studio Site Search application. It provides real-time search via the /emselect endpoint, supporting faceted search, auto-suggest, popular searches, related searches, and search analytics tracking.
+#### JSON-LD (1)
 
-- **Human URL:** [https://www.searchstax.com/docs/searchstudio/searchstax-studio-search-api/](https://www.searchstax.com/docs/searchstudio/searchstax-studio-search-api/)
-- **Base URL:** `https://search.searchstax.com`
+Linked-data contexts for the provider's vocabulary.
 
-#### Tags
+- [Searchstax Context](https://apis.io/jsonld/searchstax/searchstax-context/)
 
-- Search
-- Site Search
-- Studio
-- Full-Text Search
+#### Vocabulary (1)
 
-#### Properties
+The provider's domain terms, defined.
 
-- [Documentation](https://www.searchstax.com/docs/searchstudio/searchstax-studio-search-api/)
-- [Postman Collection](collections/searchstax-provisioning.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/searchstax-provisioning.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
+- [SearchStax Vocabulary](https://apis.io/vocabularies/searchstax/searchstax-vocabulary/)
 
-## Common Properties
+#### Examples (1)
 
-- [LinkedIn](https://www.linkedin.com/company/searchstax)
+Example requests and responses.
+
+- [Searchstax List Deployments Example](https://apis.io/examples/searchstax/searchstax-list-deployments-example/)
+
+#### Collections (7)
+
+Postman and Open Collection request collections.
+
+- [SearchStax Provisioning Authentication API](https://apis.io/collections/searchstax/open-searchstax-authentication-api/)
+- [SearchStax Provisioning Authentication Backup API](https://apis.io/collections/searchstax/open-searchstax-backup-api/)
+- [SearchStax Provisioning Authentication Deployments API](https://apis.io/collections/searchstax/open-searchstax-deployments-api/)
+- [SearchStax Provisioning Authentication Nodes API](https://apis.io/collections/searchstax/open-searchstax-nodes-api/)
+- [SearchStax Provisioning Authentication Plans API](https://apis.io/collections/searchstax/open-searchstax-plans-api/)
+- [SearchStax Provisioning API](https://apis.io/collections/searchstax/open-searchstax-provisioning/)
+- [SearchStax Provisioning Authentication Usage API](https://apis.io/collections/searchstax/open-searchstax-usage-api/)
+
+#### Governance rules (2)
+
+Spectral rulesets for the provider's contracts.
+
+- [SearchStax — jsonschema rules](https://apis.io/rules/searchstax/searchstax-jsonschema-spectral-rules/)
+- [SearchStax API Rules](https://apis.io/rules/searchstax/searchstax-rules/)
+
+#### Security (3)
+
+Authentication, trust centre, and vulnerability disclosure.
+
+- [Searchstax Authentication](https://apis.io/security/searchstax/searchstax-authentication/)
+- [Searchstax Domain Security](https://apis.io/security/searchstax/searchstax-domain-security/)
+- [Searchstax Trust Center](https://apis.io/security/searchstax/searchstax-trust-center/)
+
+#### Plans and pricing (1)
+
+Published plans, tiers and prices.
+
+- [Searchstax Plans Pricing](https://apis.io/plans/searchstax/searchstax-plans-pricing/)
+
+#### Rate limits (1)
+
+Published request limits.
+
+- [Searchstax Rate Limits](https://apis.io/rate-limits/searchstax/searchstax-rate-limits/)
+
+#### FinOps (1)
+
+What the API costs to run, by operation.
+
+- [Searchstax Finops](https://apis.io/finops/searchstax/searchstax-finops/)
+
+## Where to find this API
+
+Links to the company's own pages. This repository publishes no copy of their specifications — the canonical document is theirs and lives at the URLs below.
+
 - [Website](https://www.searchstax.com)
 - [Documentation](https://www.searchstax.com/docs/hc/searchstax-api-library/)
-- [Documentation](https://www.searchstax.com/docs/searchstax-cloud-apis-overview/)
-- [GitHub Organization](https://github.com/searchstax)
-- [Documentation](https://www.searchstax.com/docs/searchstax-cloud-deployment-api/)
-- [Documentation](https://www.searchstax.com/docs/searchstax-cloud-backup-restore-api/)
-- [Documentation](https://www.searchstax.com/docs/searchstax-cloud-authentication-api/)
-- [JSON Schema](json-schema/searchstax-deployment-schema.json) — [JSON Schema](https://json-schema.org/specification)
-- [JSON Structure](json-structure/searchstax-deployment-structure.json)
-- [J S O N L D Context](json-ld/searchstax-context.jsonld)
-- [Example](examples/searchstax-list-deployments-example.json)
-- [Spectral Ruleset](rules/searchstax-rules.yml)
-- [Vocabulary](vocabulary/searchstax-vocabulary.yml)
-- [Integrations](https://www.searchstax.com/partners/)
+- [Blog](https://www.searchstax.com/blog/)
+- [GitHub](https://github.com/searchstax)
 
-## Maintainers
+## API Evangelist rating
 
-**FN:** Kin Lane
-**Email:** kin@apievangelist.com
+**Kin Score 34.1** — thin · rubric 0.24.0 · scored 2026-10-17
+
+| Facet | Score |
+|---|---|
+| Discoverability | 66.1 |
+| Contract quality | 57.3 |
+| Contract governance | 27.3 |
+| Operational transparency | 13.2 |
+| Developer ergonomics | 23.8 |
+| Access clarity | 15.8 |
+
+**Agent readiness 19.2** — agent-aware
+
+| Agent-readiness dimension | Result |
+|---|---|
+| Spec Presence | yes |
+| Agentic Access | derived (partial credit) |
+| Reversibility Documented | — |
+| MCP Server | — |
+| Auth Clarity | bearer (partial credit) |
+| Idempotency | — |
+| Error Semantics | — |
+| OpenAPI Examples | documented (partial credit) |
+| Rate Limit Signal | derived (partial credit) |
+| Event Surface Described | — |
+| Agent Skills | — |
+| Well Known Catalog | — |
+| Consent Identity | — |
+| Agent Card | — |
+| Dry Run Mode | — |
+| Delegated Identity | — |
+| Protected Resource Metadata | — |
+| Dynamic Client Registration | — |
+| Agentic Commerce | — |
+
+**Regulatory alignment 21.6** — Horizontal (data, software, accessibility, platform)
+
+The rubric is published at [github.com/api-evangelist/kin-score](https://github.com/api-evangelist/kin-score). The per-check breakdown behind these numbers — which checks were earned, partial or missed — along with score history and how this provider compares to its peers, is available at [apis.io/providers/searchstax/](https://apis.io/providers/searchstax/).
+
+## How this profile is made
+
+API Evangelist profiles a company's public API surface the way a developer would find it: the website, developer portal and documentation, the specifications it publishes, its public repositories, and its pricing, status and changelog pages. From that it derives the properties above — contracts split per API, workflows, schemas, collections, governance rules, plans and rate limits — and scores them against the published [Kin Score rubric](https://github.com/api-evangelist/kin-score).
+
+The artifacts are published on [APIs.io](https://apis.io), not in this repository. This repository is the public record for SearchStax: the place to say something is wrong, missing or out of date, and to ask for a re-score or a removal.
+
+## Open an issue
+
+- **Something about this listing** — a wrong description, a missing API, a stale artifact or a question about the rating: [open an issue on this repository](https://github.com/api-evangelist/searchstax/issues/new).
+- **A new API, or one that is not in the catalog yet** — [submit it on APIs.io](https://apis.io/add/).
+- **Anything else** — [the APIs.io inbox](https://github.com/api-search/inbox/issues/new) or [info@apievangelist.com](mailto:info@apievangelist.com).
